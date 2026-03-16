@@ -1,0 +1,366 @@
+<!-- Swiper.js CSS via CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+<section class="cc-slider-section" data-section-id="{{ section.id }}" data-section-type="collection-carousel-slider">
+
+  {%- if section.settings.title != blank -%}
+    <div class="cc-slider-section__header">
+      <h2 class="cc-slider-section__title">{{ section.settings.title | escape }}</h2>
+    </div>
+  {%- endif -%}
+
+  <div class="cc-slider-wrapper">
+    <div class="swiper cc-slider-swiper" id="cc-slider-{{ section.id }}">
+      <div class="swiper-wrapper">
+        {%- for block in section.blocks -%}
+          <div class="swiper-slide cc-slider-slide" {{ block.shopify_attributes }}>
+            {%- assign block_link = block.settings.link | default: '#' -%}
+            {%- assign block_image = block.settings.image -%}
+            {%- assign block_title = block.settings.title -%}
+
+            <a href="{{ block_link }}" class="cc-slider-card">
+
+              {%- if block_image != blank -%}
+                {%- assign img_url = block_image | img_url: '800x1000', crop: 'center' -%}
+                <img
+                  class="cc-slider-card__bg lazyload"
+                  data-src="{{ img_url }}"
+                  alt="{{ block_image.alt | default: block_title | escape }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <div class="cc-slider-card__bg cc-slider-card__bg--placeholder">
+                  {{- 'collection-1' | placeholder_svg_tag: 'placeholder-svg' -}}
+                </div>
+              {%- endif -%}
+
+              <div class="cc-slider-card__overlay"></div>
+
+              <div class="cc-slider-card__content">
+                {%- if block_title != blank -%}
+                  <h3 class="cc-slider-card__title">{{ block_title | escape }}</h3>
+                {%- endif -%}
+                <span class="cc-slider-card__cta">CONFIRA →</span>
+              </div>
+
+            </a>
+          </div>
+        {%- endfor -%}
+
+        {%- if section.blocks.size == 0 and request.design_mode -%}
+          {%- for i in (1..4) -%}
+            <div class="swiper-slide cc-slider-slide">
+              <div class="cc-slider-card">
+                <div class="cc-slider-card__bg cc-slider-card__bg--placeholder">
+                  {{- 'collection-1' | placeholder_svg_tag: 'placeholder-svg' -}}
+                </div>
+                <div class="cc-slider-card__overlay"></div>
+                <div class="cc-slider-card__content">
+                  <h3 class="cc-slider-card__title">Nome da Coleção</h3>
+                  <span class="cc-slider-card__cta">CONFIRA →</span>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+
+      <!-- Navigation Arrows (desktop) -->
+      <div class="swiper-button-prev cc-slider-btn cc-slider-btn--prev"></div>
+      <div class="swiper-button-next cc-slider-btn cc-slider-btn--next"></div>
+    </div>
+  </div>
+
+</section>
+
+<style>
+  /* ===== SECTION ===== */
+  .cc-slider-section {
+    padding: 40px 0;
+    overflow: hidden;
+  }
+
+  .cc-slider-section__header {
+    padding: 0 24px;
+    margin-bottom: 24px;
+  }
+
+  .cc-slider-section__title {
+    font-size: clamp(18px, 4vw, 26px);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0;
+  }
+
+  /* ===== WRAPPER ===== */
+  .cc-slider-wrapper {
+    position: relative;
+    padding: 0 0 0 16px; /* padding-left: left offset for mobile */
+  }
+
+  @media (min-width: 769px) {
+    .cc-slider-wrapper {
+      padding: 0 60px; /* espaço para as setas no desktop */
+    }
+  }
+
+  /* ===== SWIPER ===== */
+  .cc-slider-swiper {
+    overflow: visible !important;
+  }
+
+  /* ===== SLIDE ===== */
+  .cc-slider-slide {
+    height: auto;
+  }
+
+  /* ===== CARD ===== */
+  .cc-slider-card {
+    display: block;
+    position: relative;
+    aspect-ratio: 3 / 4;
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    background: #1a1a2e;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .cc-slider-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  /* ===== BACKGROUND IMAGE ===== */
+  .cc-slider-card__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .cc-slider-card:hover .cc-slider-card__bg {
+    transform: scale(1.05);
+  }
+
+  .cc-slider-card__bg--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2c2c3e;
+  }
+
+  .cc-slider-card__bg--placeholder .placeholder-svg {
+    width: 60%;
+    height: 60%;
+    fill: #444;
+  }
+
+  /* ===== GRADIENT OVERLAY ===== */
+  .cc-slider-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 40%,
+      rgba(0, 0, 0, 0.5) 70%,
+      rgba(0, 0, 0, 0.85) 100%
+    );
+    z-index: 1;
+  }
+
+  /* ===== CONTENT ===== */
+  .cc-slider-card__content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 16px;
+    z-index: 2;
+    text-align: center;
+  }
+
+  .cc-slider-card__title {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 10px;
+    line-height: 1.3;
+  }
+
+  @media (min-width: 769px) {
+    .cc-slider-card__title {
+      font-size: 18px;
+    }
+  }
+
+  .cc-slider-card__cta {
+    display: inline-block;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .cc-slider-card:hover .cc-slider-card__cta {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #ffffff;
+  }
+
+  /* ===== NAVIGATION ARROWS ===== */
+  .cc-slider-btn {
+    width: 44px;
+    height: 44px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: #333;
+    top: 50%;
+    display: none; /* escondido no mobile */
+  }
+
+  @media (min-width: 769px) {
+    .cc-slider-btn {
+      display: flex;
+    }
+  }
+
+  .cc-slider-btn::after {
+    font-size: 14px;
+    font-weight: 800;
+    color: #333;
+  }
+
+  .cc-slider-btn--prev {
+    left: 8px;
+  }
+
+  .cc-slider-btn--next {
+    right: 8px;
+  }
+
+  .cc-slider-btn.swiper-button-disabled {
+    opacity: 0.35;
+    pointer-events: none;
+  }
+</style>
+
+<!-- Swiper.js JS via CDN -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+(function () {
+  function initCCSlider(sectionEl) {
+    var swiperEl = sectionEl.querySelector('.cc-slider-swiper');
+    if (!swiperEl || swiperEl.swiper) return;
+
+    new Swiper(swiperEl, {
+      grabCursor: true,
+      slidesPerView: 1.5,
+      spaceBetween: 12,
+      centeredSlides: false,
+
+      navigation: {
+        nextEl: sectionEl.querySelector('.cc-slider-btn--next'),
+        prevEl: sectionEl.querySelector('.cc-slider-btn--prev'),
+      },
+
+      breakpoints: {
+        // Tablet
+        640: {
+          slidesPerView: 2.5,
+          spaceBetween: 16,
+        },
+        // Desktop
+        769: {
+          slidesPerView: 4.5,
+          spaceBetween: 20,
+          loop: false,
+        },
+      },
+    });
+  }
+
+  function initAll() {
+    document.querySelectorAll('[data-section-type="collection-carousel-slider"]').forEach(function (el) {
+      initCCSlider(el);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
+  }
+
+  // Shopify Theme Editor support
+  document.addEventListener('shopify:section:load', function (event) {
+    var sectionEl = event.target;
+    if (sectionEl && sectionEl.dataset.sectionType === 'collection-carousel-slider') {
+      initCCSlider(sectionEl);
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "🔥 Carrossel de Coleções",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título da Seção",
+      "default": "DIVERSIFIQUE SEU PEDIDO"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_card",
+      "name": "Card de Coleção",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagem de Fundo",
+          "info": "Recomendado 800x1000px, formato vertical."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título do Card",
+          "default": "Nome da Coleção"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link da Coleção"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Collection",
+      "name": "🔥 Carrossel de Coleções",
+      "blocks": [
+        { "type": "collection_card" },
+        { "type": "collection_card" },
+        { "type": "collection_card" },
+        { "type": "collection_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}
