@@ -32,6 +32,14 @@
                  class="tab-panel {% if forloop.first %}is-visible{% endif %}"
                  {% unless forloop.first %}style="display: none;"{% endunless %}>
               
+              {%- if block.settings.image != blank -%}
+                <div class="tab-panel__image-wrapper">
+                  <img class="tab-panel__image lazyload image--fade-in" 
+                       data-src="{{ block.settings.image | img_url: '1200x' }}" 
+                       alt="{{ block.settings.image.alt | escape }}">
+                </div>
+              {%- endif -%}
+
               <div class="product-grid">
                 {%- for product in collection.products limit: section.settings.products_count -%}
                   <div class="product-grid__item">
@@ -141,6 +149,26 @@
     }
   }
 
+  /* Imagem da Coleção */
+  .tab-panel__image-wrapper {
+    margin-bottom: 30px;
+    border-radius: var(--border-radius-theme);
+    overflow: hidden;
+  }
+
+  .tab-panel__image {
+    width: 100%;
+    display: block;
+    height: auto;
+    object-fit: cover;
+  }
+
+  @media screen and (max-width: 640px) {
+    .tab-panel__image-wrapper {
+      margin-bottom: 20px;
+    }
+  }
+
   .section__footer {
     text-align: center;
     margin-top: 40px;
@@ -202,7 +230,7 @@
 
 {% schema %}
 {
-  "name": "!!! Coleções em Abas !!!",
+  "name": "Coleções em Abas",
   "settings": [
     {
       "type": "text",
@@ -236,6 +264,12 @@
           "type": "collection",
           "id": "collection",
           "label": "Coleção"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagem da Coleção",
+          "info": "Banner opcional para aparecer acima dos produtos."
         },
         {
           "type": "text",
