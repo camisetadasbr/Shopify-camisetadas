@@ -43,9 +43,11 @@
             {%- if collection != blank -%}
               {%- if block.settings.image != blank -%}
                 <a href="{{ collection.url }}" class="tab-panel__image-wrapper">
-                  <img class="tab-panel__image lazyload image--fade-in" 
-                       data-src="{{ block.settings.image | img_url: '1400x' }}" 
-                       alt="{{ block.settings.image.alt | escape }}">
+                  <div class="aspect-ratio">
+                    <img class="tab-panel__image lazyload image--fade-in" 
+                         data-src="{{ block.settings.image | img_url: '600x600', crop: 'center' }}" 
+                         alt="{{ block.settings.image.alt | escape }}">
+                  </div>
                 </a>
               {%- elsif request.design_mode -%}
                  <div class="tab-panel__placeholder" style="text-align: center; padding: 60px; border: 2px dashed #ccc;">
@@ -125,15 +127,25 @@
 
   .tab-panel__image-wrapper {
     display: block;
-    margin-bottom: 0;
+    margin: 0 auto;
+    max-width: 600px; /* Alinhado com a recomendação da seção de Coleções */
     border-radius: var(--border-radius-theme);
     overflow: hidden;
+    position: relative;
+  }
+
+  .tab-panel__image-wrapper .aspect-ratio {
+    position: relative;
+    padding-bottom: 100%; /* Proporção 1:1 igual às Coleções */
+    height: 0;
   }
 
   .tab-panel__image {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    display: block;
-    height: auto;
+    height: 100%;
     object-fit: cover;
   }
 
