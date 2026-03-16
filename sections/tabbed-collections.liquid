@@ -11,27 +11,36 @@
         <ul class="tabs-nav__list">
           {%- for block in section.blocks -%}
             {%- assign collection = collections[block.settings.collection] -%}
-            {%- if collection != blank -%}
-              <li class="tabs-nav__item">
-                <button class="tabs-nav__button {% if forloop.first %}is-active{% endif %}" 
-                        data-tab-target="tab-{{ section.id }}-{{ forloop.index }}"
-                        aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+            <li class="tabs-nav__item" {{ block.shopify_attributes }}>
+              <button class="tabs-nav__button {% if forloop.first %}is-active{% endif %}" 
+                      data-tab-target="tab-{{ section.id }}-{{ forloop.index }}"
+                      aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+                {%- if collection != blank -%}
                   {{ block.settings.title | default: collection.title | escape }}
-                </button>
-              </li>
-            {%- endif -%}
+                {%- else -%}
+                  Aba {{ forloop.index }}
+                {%- endif -%}
+              </button>
+            </li>
           {%- endfor -%}
+
+          {%- if section.blocks.size == 0 and request.design_mode -%}
+            <li class="tabs-nav__item">
+              <button class="tabs-nav__button is-active">Clique em "Adicionar Coleção"</button>
+            </li>
+          {%- endif -%}
         </ul>
       </div>
 
       <div class="tabs-content">
         {%- for block in section.blocks -%}
           {%- assign collection = collections[block.settings.collection] -%}
-          {%- if collection != blank -%}
-            <div id="tab-{{ section.id }}-{{ forloop.index }}" 
-                 class="tab-panel {% if forloop.first %}is-visible{% endif %}"
-                 {% unless forloop.first %}style="display: none;"{% endunless %}>
-              
+          <div id="tab-{{ section.id }}-{{ forloop.index }}" 
+               class="tab-panel {% if forloop.first %}is-visible{% endif %}"
+               {% unless forloop.first %}style="display: none;"{% endunless %}
+               {{ block.shopify_attributes }}>
+            
+            {%- if collection != blank -%}
               {%- if block.settings.image != blank -%}
                 <div class="tab-panel__image-wrapper">
                   <img class="tab-panel__image lazyload image--fade-in" 
@@ -53,9 +62,20 @@
                   <a href="{{ collection.url }}" class="button button--primary">{{ 'collection.general.view_all' | t }}</a>
                 </div>
               {%- endif -%}
-            </div>
-          {%- endif -%}
+            {%- elsif request.design_mode -%}
+              <div class="tab-panel__placeholder" style="text-align: center; padding: 40px; border: 2px dashed #ccc;">
+                <p>Esta aba está vazia. Selecione uma coleção nas configurações do bloco à esquerda.</p>
+              </div>
+            {%- endif -%}
+          </div>
         {%- endfor -%}
+
+        {%- if section.blocks.size == 0 and request.design_mode -%}
+          <div class="section-placeholder" style="text-align: center; padding: 60px; border: 2px dashed #ccc; background: #f9f9f9;">
+            <h3 class="heading h3">Configuração Necessária</h3>
+            <p>Adicione blocos de "Coleção" no menu lateral para começar a exibir seus produtos aqui.</p>
+          </div>
+        {%- endif -%}
       </div>
     </div>
   </div>
@@ -230,7 +250,7 @@
 
 {% schema %}
 {
-  "name": "Coleções em Abas",
+  "name": "⭐ Coleções em Abas ⭐",
   "settings": [
     {
       "type": "text",
