@@ -1,0 +1,1066 @@
+{%- capture section_settings -%}
+{
+  "navigationLayout": {{ section.settings.desktop_navigation_layout | json }},
+  "desktopOpenTrigger": {{ section.settings.desktop_navigation_open_trigger | json }},
+  "useStickyHeader": {{ section.settings.enable_sticky_header | json }}
+}
+{%- endcapture -%}
+
+{%- assign navigation_menu_handle = section.settings.navigation_menu | default: 'main-menu' -%}
+{%- assign navigation_menu = linklists[navigation_menu_handle] -%}
+
+<section data-section-id="{{ section.id }}" data-section-type="header" data-section-settings='{{ section_settings }}'>
+
+  {%- if section.settings.barraimg_top -%}
+  <section style="background: {{ section.settings.bgimg }};">
+  <div class="img-topbar topbar-flex container" style="padding: 0;">
+
+    <a class="d-none imgdopc" href="{{ section.settings.linkimg }}">
+  <img src="{{ section.settings.imgpc | img_url: '1000x' }}" class="img-responsive-pc">
+    </a>
+    
+    <a class="d-none imgdomob" href="{{ section.settings.linkimg }}">
+  <img src="{{ section.settings.imgmob | img_url: '1000x' }}" class="img-responsive-mob">
+    </a>
+
+  </div>
+  </section>
+  {%- endif -%}
+  
+  <header class="header header--{{ section.settings.desktop_navigation_layout }} {% unless section.settings.show_condensed_search %}header--search-expanded{% endunless %}" role="banner">
+    <div class="container">
+      <div class="header__inner">
+        {%- comment -%}
+        --------------------------------------------------------------------------------------
+        MOBILE NAV
+        --------------------------------------------------------------------------------------
+        {%- endcomment -%}
+
+        {%- if navigation_menu.links.size > 0 -%}
+          <nav class="header__mobile-nav hidden-lap-and-up">
+            <button class="header__mobile-nav-toggle icon-state touch-area" data-action="toggle-menu" aria-expanded="false" aria-haspopup="true" aria-controls="mobile-menu" aria-label="{{ 'header.navigation.open_menu' | t }}">
+              <span class="icon-state__primary">{%- render 'icon', icon: 'hamburger-mobile' -%}</span>
+              <span class="icon-state__secondary">{%- render 'icon', icon: 'close' -%}</span>
+            </button>
+
+            {%- render 'mobile-menu', menu: navigation_menu -%}
+          </nav>
+        {%- endif -%}
+
+        {%- comment -%}
+          --------------------------------------------------------------------------------------
+          DESKTOP NAV
+          --------------------------------------------------------------------------------------
+        {%- endcomment -%}
+
+        {%- if section.settings.desktop_navigation_layout == 'condensed' and navigation_menu.links.size > 0 -%}
+          <nav class="header__desktop-nav hidden-pocket">
+            <button class="header__desktop-nav-toggle" data-action="toggle-menu" aria-expanded="false" aria-haspopup="true" aria-label="{{ 'header.navigation.open_menu' | t }}">
+              <span>{%- render 'icon', icon: 'hamburger' -%} <span class="header__desktop-nav-text">{{- 'header.navigation.menu' | t -}}</span></span>
+            </button>
+
+            {%- render 'desktop-menu', menu: navigation_menu, index: 'desktop-menu-0' -%}
+          </nav>
+        {%- endif -%}
+
+        {%- comment -%}
+        --------------------------------------------------------------------------------------
+        LOGO COMPONENT
+        --------------------------------------------------------------------------------------
+        {%- endcomment -%}
+
+        {%- capture header_logo -%}
+          <a href="{{ routes.root_url }}" class="header__logo-link">
+            {%- if section.settings.logo != blank -%}
+              {%- capture image_size -%}{{ section.settings.logo_max_width }}x{%- endcapture -%}
+              <img class="header__logo-image"
+                   style="max-width: {{ section.settings.logo_max_width }}px"
+                   width="{{ section.settings.logo.width }}"
+                   height="{{ section.settings.logo.height }}"
+                   src="{{ section.settings.logo | img_url: image_size, scale: 2 }}"
+                   alt="{{ section.settings.logo.alt | default: shop.name | escape }}">
+            {%- else -%}
+              <span class="header__logo-text">{{ shop.name }}</span>
+            {%- endif -%}
+          </a>
+        {%- endcapture -%}
+
+        {%- if request.page_type == 'index' -%}
+          <h1 class="header__logo">{{ header_logo }}</h1>
+        {%- else -%}
+          <div class="header__logo">{{ header_logo }}</div>
+        {%- endif -%}
+
+        {%- comment -%}
+        --------------------------------------------------------------------------------------
+        SEARCH COMPONENT
+        --------------------------------------------------------------------------------------
+        {%- endcomment -%}
+
+        <div class="header__search-bar-wrapper {% unless section.settings.show_condensed_search %}is-visible{% endunless %}">
+          <form action="{{ routes.search_url }}" method="get" role="search" class="search-bar">
+            {%- assign search_menu = linklists[section.settings.search_menu] -%}
+
+            <div class="search-bar__top-wrapper">
+              <div class="search-bar__top">
+                <input type="hidden" name="type" value="product">
+                <input type="hidden" name="options[prefix]" value="last">
+
+                <div class="search-bar__input-wrapper">
+                  <input class="search-bar__input" type="text" name="q" autocomplete="off" autocorrect="off" aria-label="{{ 'header.search.input_placeholder' | t }}" placeholder="{{ 'header.search.input_placeholder' | t }}">
+                  <button type="button" class="search-bar__input-clear hidden-lap-and-up" data-action="clear-input">{% render 'icon', icon: 'close' %}</button>
+                </div>
+
+                {%- comment -%}The type detection is sometimes a bit inaccurate as it returns empty type, so we do an additional logic{%- endcomment -%}
+
+                {%- assign has_at_least_one_type = false -%}
+                {%- for product_type in shop.types -%}
+                  {%- if product_type != blank -%}
+                    {%- assign has_at_least_one_type = true -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+                {%- if section.settings.show_search_filter and has_at_least_one_type -%}
+                  <div class="search-bar__filter">
+                    <label for="search-product-type" class="search-bar__filter-label">
+                      <span class="search-bar__filter-active">{{ 'header.search.all_categories' | t }}</span> {%- render 'icon', icon: 'arrow-bottom' -%}
+                    </label>
+
+                    <select id="search-product-type">
+                      <option value="" selected="selected">{{ 'header.search.all_categories' | t }}</option>
+
+                      {%- for product_type in shop.types -%}
+                        {%- if product_type != blank -%}
+                          <option value="{{ product_type | escape }}">{{ product_type | escape }}</option>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </select>
+                  </div>
+                {%- endif -%}
+
+                <button type="submit" class="search-bar__submit" aria-label="{{ 'header.search.submit' | t }}">
+                  {%- render 'icon', icon: 'search' -%}
+                  {%- render 'icon', icon: 'search-loader' -%}
+                </button>
+              </div>
+
+              <button type="button" class="search-bar__close-button hidden-tablet-and-up" style="justify-content: center; display: flex; flex-direction: row; align-items: center;" data-action="unfix-search">
+                <span class="search-bar__close-text" style="padding-left: 10px;"><span class="icon-state__secondary"><svg class="icon icon--close" viewBox="0 0 19 19" role="presentation">
+      <path d="M9.1923882 8.39339828l7.7781745-7.7781746 1.4142136 1.41421357-7.7781746 7.77817459 7.7781746 7.77817456L16.9705627 19l-7.7781745-7.7781746L1.41421356 19 0 17.5857864l7.7781746-7.77817456L0 2.02943725 1.41421356.61522369 9.1923882 8.39339828z" fill="currentColor" fill-rule="evenodd"></path>
+    </svg></span></span>
+              </button>
+            </div>
+
+            <div class="search-bar__inner">
+              <div class="search-bar__inner-animation">
+                <div class="search-bar__results" aria-hidden="true">
+                  <div class="skeleton-container">
+                    {%- for i in (1..3) -%}
+                      <div class="search-bar__result-item search-bar__result-item--skeleton">
+                        <div class="search-bar__image-container">
+                          <div class="aspect-ratio aspect-ratio--square">
+                            <div class="skeleton-image"></div>
+                          </div>
+                        </div>
+
+                        <div class="search-bar__item-info">
+                          <div class="skeleton-paragraph">
+                            <div class="skeleton-text"></div>
+                            <div class="skeleton-text"></div>
+                          </div>
+                        </div>
+                      </div>
+                    {%- endfor -%}
+                  </div>
+
+                  <div class="search-bar__results-inner">
+                    {%- comment -%}Placeholder div for real results{%- endcomment -%}
+                  </div>
+                </div>
+
+                {%- if search_menu.links.size > 0 -%}
+                  <div class="search-bar__menu-wrapper" aria-hidden="true">
+                    {%- if section.settings.show_search_menu_title -%}
+                      <p class="search-bar__menu-title heading">{{ search_menu.title }}</p>
+                    {%- endif -%}
+
+                    <ul class="search-bar__menu-linklist list--unstyled">
+                      {%- for link in search_menu.links -%}
+                        <li>
+                          <a href="{{ link.url }}" class="search-bar__menu-link">{{ link.title }}</a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </form>
+        </div>
+    
+        {%- comment -%}
+        --------------------------------------------------------------------------------------
+        HEADER ACTIONS
+        --------------------------------------------------------------------------------------
+        {%- endcomment -%}
+
+        {%- if section.settings.show_currency_selector and shop.enabled_currencies.size > 1 -%}
+          {%- assign currency_selector = true -%}
+        {%- endif -%}
+
+        {%- if section.settings.show_locale_selector and shop.published_locales.size > 1 -%}
+          {%- assign locale_selector = true -%}
+        {%- endif -%}
+
+        {% if section.settings.box_shadow_header_active %}
+          <style>
+            .shopify-section__header {
+              box-shadow: 0 0 16px 0 #0000000d;
+            }
+          </style>
+        {% endif %}
+    
+        <div class="header__action-list">
+          {%- if locale_selector -%}
+            <div class="header__action-item header__action-item--locale hidden-pocket">
+              {%- form 'localization', id: 'localization_form_header_locale' -%}
+                <span class="header__action-item-title">{{ 'header.general.language' | t }}</span>
+                <input type="hidden" name="locale_code" value="{{ form.current_locale.iso_code }}">
+
+                <div class="header__action-item-content">
+                  <button class="header__action-item-link" data-action="toggle-popover" aria-controls="desktop-locale-selector" aria-expanded="false">
+                    <span class="locale-selector__value">{{ form.current_locale.endonym_name }}</span> {% render 'icon', icon: 'arrow-bottom' %}
+                  </button>
+
+                  <div id="desktop-locale-selector" class="popover popover--locale" aria-hidden="true">
+                    {%- render 'icon', icon: 'nav-triangle-borderless' -%}
+
+                    <div class="popover__inner popover__inner--no-padding">
+                      <ul class="popover__linklist">
+                        {%- for locale in form.available_locales -%}
+                          <li class="popover__linklist-item">
+                            <button type="submit" name="locale_code" class="popover__link-item" value="{{ locale.iso_code }}" {% if locale.iso_code == form.current_locale.iso_code %}aria-current="true"{% endif %}>
+                              {{- locale.endonym_name -}}
+                            </button>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    </div>
+                  </div>
+                {%- endform -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if currency_selector -%}
+            <div class="header__action-item header__action-item--currency hidden-pocket">
+              {%- form 'localization', id: 'localization_form_header_currency' -%}
+                <span class="header__action-item-title">{{ 'header.general.currency' | t }}</span>
+                <input type="hidden" name="currency_code" value="{{ form.current_currency.iso_code }}">
+
+                <div class="header__action-item-content">
+                  <button class="header__action-item-link" data-action="toggle-popover" aria-controls="desktop-currency-selector" aria-expanded="false">
+                    <span class="currency-selector__value">{{ form.current_currency.iso_code }} {% if form.current_currency.symbol %}{{ form.current_currency.symbol }}{% endif %}</span> {% render 'icon', icon: 'arrow-bottom' %}
+                  </button>
+
+                  <div id="desktop-currency-selector" class="popover popover--currency" aria-hidden="true">
+                    {%- render 'icon', icon: 'nav-triangle-borderless' -%}
+
+                    <div class="popover__inner popover__inner--no-padding">
+                      <ul class="popover__linklist">
+                        {%- for currency in form.available_currencies -%}
+                          <li class="popover__linklist-item">
+                            <button type="submit" name="currency_code" class="popover__link-item" value="{{ currency.iso_code }}" {% if currency.iso_code == form.current_currency.iso_code %}aria-current="true"{% endif %}>
+                              {{ currency.iso_code }} {% if currency.symbol %}{{ currency.symbol }}{% endif %}
+                            </button>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    </div>
+                  </div>
+                {%- endform -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.show_condensed_search -%}
+            <div class="header__action-item hidden-tablet-and-up">
+              <a class="header__action-item-link" href="{{ routes.search_url }}" data-action="toggle-search" aria-expanded="false" aria-label="{{ 'header.search.open_search' | t }}">{% render 'icon', icon: 'search' %}</a>
+            </div>
+          {%- endif -%}
+
+          {%- if shop.customer_accounts_enabled -%}
+            <div class="header__action-item header__action-item--account">
+              {%- if customer -%}
+                <span class="header__action-item-title hidden-pocket hidden-lap">{{ 'header.general.welcome' | t: first_name: customer.first_name | truncate: 20 }}</span>
+              {%- else -%}
+                <span class="header__action-item-title hidden-pocket hidden-lap">{{ 'header.general.login' | t }}</span>
+              {%- endif -%}
+
+              <div class="header__action-item-content">
+                <a href="{% if customer %}/account{% else %}/account/login{% endif %}" class="header__action-item-link header__account-icon icon-state hidden-desk" aria-label="{{ 'header.general.account' | t }}" aria-controls="account-popover" aria-expanded="false" data-action="toggle-popover" {% if customer %}data-follow-link="phone"{% endif %}>
+                  <span class="ionic-icon-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="var(--header-accent-color)" width="30px" class="ionicon s-ion-icon" viewBox="0 0 512 512"><title>People Circle</title><path d="M258.9 48C141.92 46.42 46.42 141.92 48 258.9c1.56 112.19 92.91 203.54 205.1 205.1 117 1.6 212.48-93.9 210.88-210.88C462.44 140.91 371.09 49.56 258.9 48zm-3.68 152.11c.21-1.2.44-2.4.71-3.59a66.46 66.46 0 0116.29-31.21c12.89-13.73 31.16-21.31 51.45-21.31a74.05 74.05 0 0125.06 4.26 66.69 66.69 0 0126.27 17.2 68.15 68.15 0 0118 42.14 78.46 78.46 0 010 11.4 86.19 86.19 0 01-8.2 31q-.76 1.59-1.59 3.15c-1.11 2.07-2.3 4.1-3.58 6.06a79.47 79.47 0 01-8.63 11c-13.12 14-29.92 21.73-47.31 21.73a59.61 59.61 0 01-19.17-3.18 63.47 63.47 0 01-6.1-2.43 70.76 70.76 0 01-22.07-16.12 83.76 83.76 0 01-22-51.32q-.27-3.88-.18-7.68a75.62 75.62 0 011.05-11.08zm-149.73 24.34a59.87 59.87 0 015.2-20.64 56.76 56.76 0 012.78-5.3 54.49 54.49 0 017.19-9.56 55.62 55.62 0 0114-10.82 56.84 56.84 0 018.11-3.64 63.85 63.85 0 0133.35-2.39 57 57 0 0130.78 17 57.86 57.86 0 0115.41 38.62c.05 2.11 0 4.23-.15 6.38a71.58 71.58 0 01-6 23.84 69.49 69.49 0 01-5.73 10.42 65.39 65.39 0 01-15.76 16.57c-1.5 1.07-3.06 2.07-4.67 3.07a54.21 54.21 0 01-10 4.65 49.31 49.31 0 01-16.2 2.76c-.93 0-1.86 0-2.78-.08a47.6 47.6 0 01-5.48-.62 51.19 51.19 0 01-5.35-1.23 53.54 53.54 0 01-7.72-2.89c-.84-.39-1.66-.8-2.48-1.23-18-9.49-31.57-29.16-34.23-52.12-.12-1.05-.22-2.1-.29-3.16a66.59 66.59 0 01.02-9.63zm53.92 178.6a177.27 177.27 0 01-61.94-70.65 4 4 0 011.62-5.26C117.67 316.69 141.4 311 163.82 311c17 0 30.7 2 42.69 5.88a8 8 0 012.59 13.77c-23.35 19-38.4 42.54-45.47 70.75a2.77 2.77 0 01-4.22 1.65zM256 432a175.12 175.12 0 01-65.7-12.72 4 4 0 01-2.4-4.46c.4-2.05.84-3.92 1.23-5.48 7.12-28.43 24.76-52 51-68.18 23.29-14.35 53-22.25 83.52-22.25 31.16 0 60 7.58 83.48 21.91a2.72 2.72 0 01.91 3.67A176.1 176.1 0 01256 432z"></path><path d="M161 295.28a47.6 47.6 0 01-5.48-.62 47.6 47.6 0 005.48.62zM134.64 178.13a55.62 55.62 0 00-14 10.82 54.49 54.49 0 00-7.19 9.56 54.49 54.49 0 017.19-9.56 55.62 55.62 0 0114-10.82zM216.17 257.89a71.58 71.58 0 006-23.84c.15-2.15.2-4.27.15-6.38q.08 3.15-.15 6.38a71.58 71.58 0 01-6 23.84zM134.64 178.13a56.84 56.84 0 018.11-3.64 56.84 56.84 0 00-8.11 3.64zM150.21 293.43a53.54 53.54 0 01-7.72-2.89 53.54 53.54 0 007.72 2.89zM105.78 237.19c2.66 23 16.26 42.63 34.23 52.12-18.01-9.49-31.57-29.16-34.23-52.12zM254.34 219a83.76 83.76 0 0022 51.32 70.76 70.76 0 0022.07 16.12 70.76 70.76 0 01-22.07-16.12 83.76 83.76 0 01-22-51.32q-.27-3.88-.18-7.68-.09 3.75.18 7.68zM304.5 288.82a63.47 63.47 0 01-6.1-2.43 63.47 63.47 0 006.1 2.43zM255.93 196.54a66.46 66.46 0 0116.29-31.21 66.46 66.46 0 00-16.29 31.21zM375 165.46a68.15 68.15 0 0118 42.14 68.15 68.15 0 00-18-42.14 66.69 66.69 0 00-26.27-17.2 66.69 66.69 0 0126.27 17.2zM393 219a86.19 86.19 0 01-8.2 31 86.19 86.19 0 008.2-31zM254.16 211.27a75.62 75.62 0 011.06-11.14 75.62 75.62 0 00-1.06 11.14zM383.19 253.16zM206.88 189.05a57.86 57.86 0 0115.41 38.62 57.86 57.86 0 00-15.41-38.62 57 57 0 00-30.78-17 57 57 0 0130.78 17zM190 288a54.21 54.21 0 01-10 4.65 54.21 54.21 0 0010-4.65zM105.49 224.45a59.87 59.87 0 015.2-20.64 59.87 59.87 0 00-5.2 20.64zM194.68 284.88C193.17 286 191.61 287 190 288c1.61-1 3.17-2 4.68-3.12zM216.17 257.89a69.49 69.49 0 01-5.73 10.42 69.49 69.49 0 005.73-10.42zM110.69 203.81a56.76 56.76 0 012.78-5.3 56.76 56.76 0 00-2.78 5.3zM194.68 284.88a65.39 65.39 0 0015.76-16.57 65.39 65.39 0 01-15.76 16.57z"></path></svg>
+            </span>
+                  <span class="icon-state__secondary">{%- render 'icon', icon: 'close' -%}</span>
+                </a>
+
+                <a href="{% if customer %}/account{% else %}/account/login{% endif %}" class="header__action-item-link hidden-pocket hidden-lap" aria-controls="account-popover" aria-expanded="false" data-action="toggle-popover">{{ 'header.general.account' | t }} {% render 'icon', icon: 'arrow-bottom' %}</a>
+
+                <div id="account-popover" class="popover {% if customer %}popover--logged{% else %}popover--large popover--unlogged{% endif %}" aria-hidden="true">
+                  {%- render 'icon', icon: 'nav-triangle-borderless' -%}
+
+                  {%- if customer -%}
+                    <div class="popover__inner popover__inner--no-padding">
+                      <div class="popover__linklist">
+                        <a class="popover__link-item" href="{{ routes.account_url }}">{{ 'customer.general.orders' | t }}</a>
+                        <a class="popover__link-item" href="{{ routes.account_addresses_url }}">{{ 'customer.general.addresses' | t }}</a>
+                        <a class="popover__link-item" href="{{ routes.account_logout_url }}" data-no-instant>{{ 'customer.general.logout' | t }}</a>
+                      </div>
+                    </div>
+                  {%- else -%}
+                    <div class="popover__panel-list">
+                      {%- comment -%}LOGIN{%- endcomment -%}
+                      <div id="header-login-panel" class="popover__panel popover__panel--default is-selected">
+                        <div class="popover__inner">
+                          {%- form 'customer_login', name: 'login', class: 'form', id: 'header_customer_login' -%}
+                            <header class="popover__header">
+                              <h2 class="popover__title heading">{{ 'customer.login.login' | t }}</h2>
+                              <p class="popover__legend">{{ 'customer.login.description' | t }}</p>
+                            </header>
+
+                            <div class="form__input-wrapper form__input-wrapper--labelled">
+                              <input type="email" id="login-customer[email]" class="form__field form__field--text" name="customer[email]" required="required">
+                              <label for="login-customer[email]" class="form__floating-label">{{ 'customer.login.email' | t }}</label>
+                            </div>
+
+                            <div class="form__input-wrapper form__input-wrapper--labelled">
+                              <input type="password" id="login-customer[password]" class="form__field form__field--text" name="customer[password]" required="required" autocomplete="current-password">
+                              <label for="login-customer[password]" class="form__floating-label">{{ 'customer.login.password' | t }}</label>
+                            </div>
+
+                            <button type="submit" class="form__submit button button--primary button--full">{{ 'customer.login.submit' | t }}</button>
+                          {%- endform -%}
+
+                          <div class="popover__secondary-action">
+                            <p>{{ 'customer.login.new_customer' | t }} <button data-action="show-popover-panel" aria-controls="header-register-panel" class="link link--accented">{{ 'customer.login.create_your_account' | t }}</button></p>
+                            <p>{{ 'customer.login.lost_password' | t }} <button data-action="show-popover-panel" aria-controls="header-recover-panel" class="link link--accented">{{ 'customer.login.recover_password' | t }}</button></p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {%- comment -%}RECOVER{%- endcomment -%}
+                      <div id="header-recover-panel" class="popover__panel popover__panel--sliding">
+                        <div class="popover__inner">
+                          {%- form 'recover_customer_password', name: 'recover', class: 'form' -%}
+                            <header class="popover__header">
+                              <h2 class="popover__title heading">{{ 'customer.recover_password.recover_password' | t }}</h2>
+                              <p class="popover__legend">{{ 'customer.recover_password.description' | t }}</p>
+                            </header>
+
+                            <div class="form__input-wrapper form__input-wrapper--labelled">
+                              <input type="email" id="recover-customer[recover_email]" class="form__field form__field--text" name="email" required="required">
+                              <label for="recover-customer[recover_email]" class="form__floating-label">{{ 'customer.recover_password.email' | t }}</label>
+                            </div>
+
+                            <button type="submit" class="form__submit button button--primary button--full">{{ 'customer.recover_password.submit' | t }}</button>
+                          {%- endform -%}
+
+                          <div class="popover__secondary-action">
+                            <p>{{ 'customer.recover_password.remembered_your_password' | t }} <button data-action="show-popover-panel" aria-controls="header-login-panel" class="link link--accented">{{ 'customer.recover_password.back_to_login' | t }}</button></p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {%- comment -%}REGISTER{%- endcomment -%}
+                      <div id="header-register-panel" class="popover__panel popover__panel--sliding">
+                        <div class="popover__inner">
+                          {%- form 'create_customer', name: 'create', class: 'form' -%}
+                            <header class="popover__header">
+                              <h2 class="popover__title heading">{{ 'customer.register.create_account' | t }}</h2>
+                              <p class="popover__legend">{{ 'customer.register.description' | t }}</p>
+                            </header>
+
+                            <div class="form__input-wrapper form__input-wrapper--labelled">
+                              <input type="text" id="register-customer[first_name]" class="form__field form__field--text" name="customer[first_name]" required="required">
+                              <label for="register-customer[first_name]" class="form__floating-label">{{ 'customer.register.first_name' | t }}</label>
+                            </div>
+
+                            <div class="form__input-wrapper form__input-wrapper--labelled">
+                              <input type="text" id="register-customer[last_name]" class="form__field form__field--text" name="customer[last_name]" required="required">
+                              <label for="register-customer[last_name]" class="form__floating-label">{{ 'customer.register.last_name' | t }}</label>
+                            </div>
+
+                            <div class="form__input-wrapper form__input-wrapper--labelled">
+                              <input type="email" id="register-customer[email]" class="form__field form__field--text" name="customer[email]" required="required">
+                              <label for="register-customer[email]" class="form__floating-label">{{ 'customer.register.email' | t }}</label>
+                            </div>
+
+                            <div class="form__input-wrapper form__input-wrapper--labelled">
+                              <input type="password" id="register-customer[password]" class="form__field form__field--text" name="customer[password]" required="required" autocomplete="new-password">
+                              <label for="register-customer[password]" class="form__floating-label">{{ 'customer.register.password' | t }}</label>
+                            </div>
+
+                            <button type="submit" class="form__submit button button--primary button--full">{{ 'customer.register.submit' | t }}</button>
+                          {%- endform -%}
+
+                          <div class="popover__secondary-action">
+                            <p>{{ 'customer.register.already_have_account' | t }} <button data-action="show-popover-panel" aria-controls="header-login-panel" class="link link--accented">{{ 'customer.register.login' | t }}</button></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+
+          {% if section.settings.show_track_order_header %}
+          <div class="header__action-item">
+            <a class="header__action-item-link header__cart-toggle" href="/pages/{{ section.settings.rastreiopage }}">
+              <div class="header__action-item-content">
+                <div class="header-delivery-icon icon-state">
+                  <span class="icon-state__primary ionic-icon-header"><ion-icon name="location-sharp"></ion-icon></span>
+                </div>
+                <div class="secttions-header-title">
+                  <span class="sub-txt-header-sections">Onde está meu produto?</span>
+                  <span class="hidden-pocket hidden-lap">{{ 'header.general.trackshipping' | t }}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+          {% endif %}
+                    
+          <div class="header__action-item header__action-item--cart">
+            <a class="header__action-item-link header__cart-toggle" href="{{ routes.cart_url }}" {% if settings.cart_type == 'drawer' and template != 'cart' %}aria-controls="mini-cart" aria-expanded="false" data-action="toggle-mini-cart"{% endif %} data-no-instant>
+              <div class="header__action-item-content">
+                <div class="header__cart-icon icon-state" aria-expanded="false">
+                  <span class="icons-align-header-cart icon-state__primary">
+                    {% comment %} <span class="ionic-icon-header"><ion-icon name="bag-handle"></ion-icon></span> {% endcomment %} 
+                    <span class="ionic-icon-header">
+                      
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="var(--header-accent-color)" width="30px" class="ionicon s-ion-icon" viewBox="0 0 512 512"><title>Bag Handle</title><path d="M454.65 169.4A31.82 31.82 0 00432 160h-64v-16a112 112 0 00-224 0v16H80a32 32 0 00-32 32v216c0 39 33 72 72 72h272a72.22 72.22 0 0050.48-20.55 69.48 69.48 0 0021.52-50.2V192a31.75 31.75 0 00-9.35-22.6zM176 144a80 80 0 01160 0v16H176zm192 96a112 112 0 01-224 0v-16a16 16 0 0132 0v16a80 80 0 00160 0v-16a16 16 0 0132 0z"></path></svg>
+                      
+                    </span>
+                    <span class="header__cart-count">{{ cart.item_count }}</span>
+                  </span>
+
+                  <span class="icon-state__secondary">{%- render 'icon', icon: 'close' -%}</span>
+                </div>
+
+                <span class="hidden-pocket hidden-lap secttions-header-title">{{ 'header.general.cart' | t }}</span>
+              </div>
+            </a>
+
+            {%- if settings.cart_type == 'drawer' and template != 'cart' -%}
+              {%- render 'mini-cart' -%}
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {%- if section.settings.desktop_navigation_layout == 'inline' and navigation_menu.links.size > 0 -%}
+   <nav class="nav-bar">
+     <div class="nav-bar__inner" style="text-align: center; color: var(--header-bar-text-color);">
+       <div class="container">
+
+  {% if section.settings.mostrar_bar_info_shipping %}
+  {% render 'bar-info-shipping' %}
+  {% endif %}
+         
+         <ul class="nav-bar__linklist list--unstyled" data-type="menu" style="border-radius: 10px 10px 0px 0;">
+           <i class="fa fa-bars" style="margin-right: 10px; color: var(--header-bar-text-color);" aria-hidden="true"></i>
+             {%- for link in navigation_menu.links -%}
+              <li class="nav-bar__item">
+                {%- if link.links.size == 0 -%}
+                  <a href="{{ link.url }}" class="nav-bar__link link" data-type="menuitem">{{ link.title }}</a>
+                {%- else -%}
+                  <a href="{{ link.url }}" class="nav-bar__link link" data-type="menuitem" aria-expanded="false" aria-haspopup="true">
+                    {{- link.title -}}
+                    {%- render 'icon', icon: 'arrow-bottom' -%}
+                    {%- render 'icon', icon: 'nav-triangle' -%}
+                  </a>
+
+                  {%- capture index -%}desktop-menu-0-{{ forloop.index }}{%- endcapture -%}
+                  {%- render 'desktop-menu', menu: link, index: index -%}
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  {%- endif -%}  
+</section>
+
+<div class="container-fluid color-line" style="
+    background: linear-gradient(to right, #f39c12, #ff8b01, #000000);
+    height: 5px;
+    width: 100%;
+    background-image: linear-gradient(to right, #000000, #ff8b01, #000000);">
+</div>
+<img src="https://cdn.shopify.com/s/files/1/0672/4576/8933/files/SPOILER_DE_OFERTAS_2000_x_150_px.png?v=1701054861" class="img-responsive">
+
+<div class="container-fluid color-line" style="
+    background: linear-gradient(to right, #000000, #ff8b01, #000000);
+    height: 5px;
+    width: 100%;
+    background-image: linear-gradient(to right, #000000, #ff8b01, #000000);">
+</div>
+                                          
+  {%- if section.settings.barraimg_bottom -%}
+  <section style="background: {{ section.settings.bgimg }};">
+  <div class="img-topbar topbar-flex container" style="padding: 0;">
+
+    <a class="d-none imgdopc" href="{{ section.settings.linkimg }}">
+  <img src="{{ section.settings.imgpc | img_url: '1000x' }}" class="img-responsive-pc">
+    </a>
+    
+    <a class="d-none imgdomob" href="{{ section.settings.linkimg }}">
+  <img src="{{ section.settings.imgmob | img_url: '1000x' }}" class="img-responsive-mob">
+    </a>
+
+  </div>
+  </section>
+  {%- endif -%}
+
+  <style>
+    
+    .img-topbar {
+      justify-content: center!important;
+    }
+    
+    .topbar-flex {
+      display: flex!important;
+    }
+    
+    .img-responsive-mob {
+      width: {{ section.settings.imgmob_max_width }}%;
+      height: auto;
+    }
+      
+    .img-responsive-pc {
+      width: {{ section.settings.imgpc_max_width }}%;
+      height: auto;
+    }
+
+    @media screen and (max-width: 640px) {
+    .imgdopc {
+      display: none;
+    }
+    }
+    
+    @media screen and (min-width: 641px){
+    .imgdomob {
+      display: none;
+    }
+    }
+    
+  </style>
+
+  {%- if settings.header_background == settings.header_bar_background -%}
+    <style>
+    @media screen and (min-width: 641px) {
+      .header {
+        padding: 28px 0;
+        padding-bottom: 4px;
+      }
+    }
+    </style>
+  {%- endif -%}
+
+  {%- if section.settings.selector_style_search_icon == 'style_1' -%}
+<style>
+  .search-bar__submit {
+    flex: none;
+    width: 60px;
+    background: var(--header-accent-color);
+    height: 37px;
+    border-radius: calc(var(--border-radius-theme) - 2px);
+    color: white;
+    margin-right: 4px;
+}
+</style>
+  {% endif %}
+        
+  {%- if section.settings.selector_style_search_icon == 'style_2' -%}
+<style>
+  .search-bar__submit {
+    flex: none;
+    width: 49px;
+    background: transparent;
+    height: 29px;
+    border-radius: 0;
+    color: var(--header-accent-color);
+    margin-right: 4px;
+    border-left: 1px solid #80808047;
+  }
+
+  .search-bar__submit .icon--search {
+    width: 21px;
+    height: 21px;
+  }
+</style>
+  {% endif %}
+    
+  {%- if section.settings.mostrar_barra -%}
+  
+      <div class="container-fluid color-line" style="
+    background: linear-gradient(to right, {{ section.settings.background1 }}, {{ section.settings.background2 }}, {{ section.settings.background3 }}, {{ section.settings.background4 }});
+    height: 6px;
+    width: 100%;">
+      </div>
+  
+  {%- endif -%}
+
+<style>
+  :root {
+    --header-is-sticky: {% if section.settings.enable_sticky_header %}1{% else %}0{% endif %};
+    --header-inline-navigation: {% if section.settings.desktop_navigation_layout == 'inline' %}1{% else %}0{% endif %};
+  }
+
+  #shopify-section-{{ section.id }} {
+    position: relative;
+    z-index: 5;
+
+    {%- if section.settings.enable_sticky_header -%}
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+    {%- endif -%}
+  }
+
+  {%- if section.settings.logo -%}
+    .header__logo-image {
+      max-width: {{ section.settings.mobile_logo_max_width }}px !important;
+    }
+
+    @media screen and (min-width: 641px) {
+      .header__logo-image {
+        max-width: {{ section.settings.logo_max_width }}px !important;
+      }
+    }
+  {%- endif -%}
+
+  {%- if settings.header_background == settings.secondary_background -%}
+    .search-bar__top {
+      border-radius: var(--border-radius-theme);
+      background: #f1f1f1;
+      color: var(--text-color);
+      justify-content: space-between;
+    }
+
+    @media screen and (min-width: 1000px) {
+      /* This allows to reduce the padding if header background is the same as secondary background to avoid space that is too big */
+      .header:not(.header--condensed) {
+        padding-bottom: 0px;
+      }
+    }
+  {%- else -%}
+    @media screen and (min-width: 1000px) {
+      .search-bar.is-expanded .search-bar__top {
+        box-shadow: 0 -1px #464646 inset;
+      }
+    }
+  {%- endif -%}
+</style>
+
+<script>
+  document.documentElement.style.setProperty('--header-height', document.getElementById('shopify-section-{{ section.id }}').clientHeight + 'px');
+</script>
+
+{% schema %}
+{
+  "name": "Cabeçalho",
+  "class": "shopify-section__header",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_header",
+      "label": "Ativar cabeçalho fixo",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "box_shadow_header_active",
+      "label": "Sombra abaixo do cabeçalho",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Rastrear pedido"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_track_order_header",
+      "label": "Seção de rastreamento",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rastreiopage",
+      "label": "URL do rastreio",
+      "default": "rastrear-pedido",
+      "info": "Coloque apenas o final da sua URL, ex: https://sualoja/pages/rastrear-pedido = Nesse caso, você deve colocar apenas: rastrear-pedido"
+    },
+    {
+      "type": "header",
+      "content": "Ícone de pesquisa"
+    },
+    {
+      "type": "select",
+      "id": "selector_style_search_icon",
+      "label": "Estilo do ícone",
+      "options": [
+        {
+          "value": "style_1",
+          "label": "Estilo 1"
+        },
+        {
+          "value": "style_2",
+          "label": "Estilo 2"
+        }
+      ],
+      "default": "style_1"
+    },
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Imagem",
+      "info": "200 x 60px .png recomendado"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "min": 50,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "label": "Tamanho no Desktop",
+      "default": 140
+    },
+    {
+      "type": "range",
+      "id": "mobile_logo_max_width",
+      "min": 50,
+      "max": 170,
+      "step": 5,
+      "unit": "px",
+      "label": "Tamanho no Mobile",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Imagem"
+    },
+    {
+      "type": "checkbox",
+      "id": "barraimg_top",
+      "label": "Acima do cabeçalho",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "barraimg_bottom",
+      "label": "Abaixo do cabeçalho",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "bgimg",
+      "label": "Cor de fundo",
+      "default": "#1e2d7d"
+    },
+    {
+      "type": "image_picker",
+      "id": "imgpc",
+      "label": "Imagem Desktop"
+    },
+    {
+      "type": "range",
+      "id": "imgpc_max_width",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Tamanho no Desktop",
+      "default": 100
+    },
+    {
+      "type": "image_picker",
+      "id": "imgmob",
+      "label": "Imagem Mobile"
+    },
+    {
+      "type": "range",
+      "id": "imgmob_max_width",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Tamanho no Mobile",
+      "default": 100
+    },
+    {
+      "type": "text",
+      "id": "linkimg",
+      "label": "URL de redirecionamento",
+      "default": "https://dropmeta.com.br/tema",
+      "info": "Coloque aqui o link de alguma coleção de oferta ou até mesmo um produto"
+    },
+    {
+      "type": "header",
+      "content": "Barra de frete com local"
+    },
+    {
+      "type": "checkbox",
+      "id": "mostrar_bar_info_shipping",
+      "label": "Mostrar seção",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "bg_bar_info_shipping",
+      "label": "Fundo da barra",
+      "default": "#eeeff1"
+    },
+    {
+      "type": "color",
+      "id": "bg_bar_info_bold",
+      "label": "Frete, localização e ícone",
+      "default": "#0082ff"
+    },
+    {
+      "type": "color",
+      "id": "bg_bar_info_normal",
+      "label": "Texto",
+      "default": "#515971"
+    },
+    {
+      "type": "header",
+      "content": "Barra colorida"
+    },
+    {
+      "type": "checkbox",
+      "id": "mostrar_barra",
+      "label": "Mostrar barra",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background1",
+      "label": "Cor 1",
+      "default": "#00FF48"
+    },
+    {
+      "type": "color",
+      "id": "background2",
+      "label": "Cor 2",
+      "default": "#01C6FF"
+    },
+    {
+      "type": "color",
+      "id": "background3",
+      "label": "Cor 3",
+      "default": "#FFA000"
+    },
+    {
+      "type": "color",
+      "id": "background4",
+      "label": "Cor 4",
+      "default": "#C100BE"
+    },
+    {
+      "type": "header",
+      "content": "Language selector",
+      "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_locale_selector",
+      "label": "Show language selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Currency selector",
+      "info": "To add a currency, go to your [payment settings.](/admin/settings/payments)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_currency_selector",
+      "label": "Show currency selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "navigation_menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "select",
+      "id": "desktop_navigation_layout",
+      "label": "Desktop layout",
+      "options": [
+        {
+          "value": "condensed",
+          "label": "Condensed"
+        },
+        {
+          "value": "inline",
+          "label": "Inline"
+        }
+      ],
+      "default": "condensed"
+    },
+    {
+      "type": "select",
+      "id": "desktop_navigation_open_trigger",
+      "label": "Open dropdown on...",
+      "options": [
+        {
+          "value": "hover",
+          "label": "Hover"
+        },
+        {
+          "value": "click",
+          "label": "Click"
+        }
+      ],
+      "default": "hover"
+    },
+    {
+      "type": "header",
+      "content": "Mobile navigation"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation_social_media",
+      "label": "Show social media",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "navigation_phone_number",
+      "label": "Phone number text",
+      "default": "Call us 000-000-0000"
+    },
+    {
+      "type": "text",
+      "id": "navigation_email",
+      "label": "Email",
+      "default": "info@yourwebsite.com"
+    },
+    {
+      "type": "header",
+      "content": "Search"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_condensed_search",
+      "label": "Minimise search on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search_filter",
+      "label": "Show search filter",
+      "default": true,
+      "info": "Refine by product type. [Learn more](https://support.maestrooo.com/article/184-navigation-filtering-search-results-by-product-type)"
+    },
+    {
+      "type": "link_list",
+      "id": "search_menu",
+      "label": "Quick links menu",
+      "info": "Show quick links when the user hasn't type anything. This menu won't show dropdown items."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search_menu_title",
+      "label": "Show quick links title",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Mega menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_item",
+          "label": "Menu item",
+          "info": "Enter menu item to apply a mega menu dropdown. [Learn more](https://support.maestrooo.com/article/180-navigation-enabling-and-configuring-mega-navigation)."
+        },
+        {
+          "type": "header",
+          "content": "Image 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image",
+          "info": "600 x 400px .jpg recommended"
+        },
+        {
+          "type": "text",
+          "id": "image_1_heading",
+          "label": "Heading",
+          "default": "Your image"
+        },
+        {
+          "type": "text",
+          "id": "image_1_text",
+          "label": "Text",
+          "default": "Tell your story"
+        },
+        {
+          "type": "url",
+          "id": "image_1_link",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Image 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image",
+          "info": "600 x 400px .jpg recommended"
+        },
+        {
+          "type": "text",
+          "id": "image_2_heading",
+          "label": "Heading",
+          "default": "Your image"
+        },
+        {
+          "type": "text",
+          "id": "image_2_text",
+          "label": "Text",
+          "default": "Tell your story"
+        },
+        {
+          "type": "url",
+          "id": "image_2_link",
+          "label": "Link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
