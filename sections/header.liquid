@@ -503,9 +503,55 @@
     width: 100%;
     background-image: linear-gradient(to right, #000000, #ff8b01, #000000);">
 </div>
-{%- comment -%}
-<img src="https://cdn.shopify.com/s/files/1/0672/4576/8933/files/SPOILER_DE_OFERTAS_2000_x_150_px.png?v=1701054861" class="img-responsive">
-{%- endcomment -%}
+{%- if true -%}
+<div class="header-marquee">
+  <div class="header-marquee__track">
+    <div class="header-marquee__item">parcelamento em 12x + frete gratis</div>
+    <div class="header-marquee__item">CONFIRA NOSSAS NOVIDADES!</div>
+    <div class="header-marquee__item">parcelamento em 12x + frete gratis</div>
+    <div class="header-marquee__item">CONFIRA NOSSAS NOVIDADES!</div>
+    <div class="header-marquee__item">parcelamento em 12x + frete gratis</div>
+    <div class="header-marquee__item">CONFIRA NOSSAS NOVIDADES!</div>
+  </div>
+</div>
+
+<style>
+  .header-marquee {
+    background: #000000;
+    color: #ffffff;
+    overflow: hidden;
+    padding: 10px 0;
+    width: 100%;
+  }
+  .header-marquee__track {
+    display: flex;
+    white-space: nowrap;
+    animation: header-marquee-scroll 20s linear infinite;
+    width: max-content;
+  }
+  .header-marquee__item {
+    padding: 0 40px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+  }
+  @keyframes header-marquee-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .header-marquee:hover .header-marquee__track {
+    animation-play-state: paused;
+  }
+  @media screen and (max-width: 640px) {
+    .header-marquee__item {
+      padding: 0 20px;
+      font-size: 12px;
+    }
+  }
+</style>
+{%- endif -%}
 
 <div class="container-fluid color-line" style="
     background: linear-gradient(to right, #000000, #ff8b01, #000000);

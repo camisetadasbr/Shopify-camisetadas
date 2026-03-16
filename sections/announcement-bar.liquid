@@ -103,7 +103,12 @@
   </style>
 
   <script>
-    document.documentElement.style.setProperty('--announcement-bar-height', document.getElementById('shopify-section-{{ section.id }}').clientHeight + 'px');
+    window.addEventListener('load', function() {
+      var section = document.getElementById('shopify-section-{{ section.id }}');
+      if (section) {
+        document.documentElement.style.setProperty('--announcement-bar-height', section.clientHeight + 'px');
+      }
+    });
   </script>
 {%- endif -%}
 
@@ -183,4 +188,3 @@
   }
 }
 {% endschema %}
- %}

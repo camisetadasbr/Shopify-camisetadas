@@ -230,7 +230,9 @@
 
     <span class="loading-bar"></span>
 
+    {%- comment -%}
     {% section 'announcement-bar' %}
+    {%- endcomment -%}
 
     {%- unless request.page_type == 'cart' -%}
       {%- comment -%}As required by Shopify rules, popup must be removed on cart page to remove distraction{%- endcomment -%}
