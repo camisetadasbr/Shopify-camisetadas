@@ -23,6 +23,8 @@
               href="{{ collection.url | default: '#' }}"
               class="collection-item"
               data-collection-index="{{ forloop.index0 }}"
+              rel="noopener"
+              data-no-instant
               {{ block.shopify_attributes }}
             >
               {%- unless collection.empty? -%}
