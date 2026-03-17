@@ -18,6 +18,14 @@
             {%- assign block_image = block.settings.image -%}
             {%- assign block_title = block.settings.title -%}
 
+            {%- assign block_link = block.settings.link -%}
+            {%- assign block_title = block.settings.title -%}
+
+            {%- if block_link == blank or block_link == '#' -%}
+              {%- assign handle = block_title | handleize -%}
+              {%- assign block_link = '/collections/' | append: handle -%}
+            {%- endif -%}
+
             <a href="{{ block_link }}" class="cc-slider-card" rel="noopener" data-no-instant>
 
               {%- if block_image != blank -%}
