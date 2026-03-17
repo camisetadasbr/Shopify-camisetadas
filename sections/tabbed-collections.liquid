@@ -7,73 +7,84 @@
     {%- endif -%}
 
     <div class="tabbed-collections">
+
+      {%- comment -%}
+        BOTÕES DE NAVEGAÇÃO — cada um é um <a> direto para a coleção.
+        NÃO usam JavaScript de troca de painel para não quebrar o histórico do navegador.
+      {%- endcomment -%}
       <div class="tabs-nav">
         <ul class="tabs-nav__list">
           {%- for block in section.blocks -%}
             {%- assign collection = collections[block.settings.collection] -%}
             <li class="tabs-nav__item" {{ block.shopify_attributes }}>
-              <button class="tabs-nav__button {% if forloop.first %}is-active{% endif %}" 
-                      data-tab-target="tab-{{ section.id }}-{{ forloop.index }}"
-                      aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
-                {%- if collection != blank -%}
+              {%- if collection != blank -%}
+                <a href="{{ collection.url }}"
+                   class="tabs-nav__button"
+                   rel="noopener">
                   {{ block.settings.title | default: collection.title | escape }}
-                {%- else -%}
+                </a>
+              {%- else -%}
+                <span class="tabs-nav__button tabs-nav__button--empty">
                   Aba {{ forloop.index }}
-                {%- endif -%}
-              </button>
+                </span>
+              {%- endif -%}
             </li>
           {%- endfor -%}
 
           {%- if section.blocks.size == 0 and request.design_mode -%}
             <li class="tabs-nav__item">
-              <button class="tabs-nav__button is-active">Clique em "Adicionar Coleção"</button>
+              <span class="tabs-nav__button">Clique em "Adicionar Coleção"</span>
             </li>
           {%- endif -%}
         </ul>
       </div>
 
-      <div class="tabs-content">
+      {%- comment -%}
+        BANNERS DAS COLEÇÕES — exibidos em grade.
+        Cada banner é um <a> limpo apontando direto para a coleção, sem scripts.
+      {%- endcomment -%}
+      <div class="tabs-content tabs-content--grid">
         {%- for block in section.blocks -%}
           {%- assign collection = collections[block.settings.collection] -%}
-          <div id="tab-{{ section.id }}-{{ forloop.index }}" 
-               class="tab-panel {% if forloop.first %}is-visible{% endif %}"
-               {% unless forloop.first %}style="display: none;"{% endunless %}
-               {{ block.shopify_attributes }}>
-            
-            {%- if collection != blank -%}
-              {%- if block.settings.image != blank -%}
-                <a href="{{ collection.url }}" class="tab-panel__image-wrapper" rel="noopener" data-no-instant>
-                  <div class="aspect-ratio">
-                    <img class="tab-panel__image lazyload image--fade-in" 
-                         data-src="{{ block.settings.image | img_url: '600x600', crop: 'center' }}" 
-                         alt="{{ block.settings.image.alt | escape }}">
-                  </div>
-                </a>
-              {%- elsif request.design_mode -%}
-                 <div class="tab-panel__placeholder" style="text-align: center; padding: 60px; border: 2px dashed #ccc;">
-                  <p>Esta aba não tem imagem. Carregue uma "Imagem da Coleção" no menu lateral.</p>
-                </div>
-              {%- endif -%}
-            {%- elsif request.design_mode -%}
-              <div class="tab-panel__placeholder" style="text-align: center; padding: 40px; border: 2px dashed #ccc;">
-                <p>Esta aba está vazia. Selecione uma coleção nas configurações do bloco à esquerda.</p>
+
+          {%- if collection != blank and block.settings.image != blank -%}
+            <a href="{{ collection.url }}"
+               class="tab-panel__image-wrapper"
+               rel="noopener"
+               title="{{ block.settings.title | default: collection.title | escape }}">
+              <div class="aspect-ratio">
+                <img class="tab-panel__image lazyload image--fade-in"
+                     data-src="{{ block.settings.image | img_url: '600x600', crop: 'center' }}"
+                     alt="{{ block.settings.image.alt | default: collection.title | escape }}">
               </div>
-            {%- endif -%}
-          </div>
+              <span class="tab-panel__label">{{ block.settings.title | default: collection.title | escape }}</span>
+            </a>
+
+          {%- elsif request.design_mode -%}
+            <div class="tab-panel__placeholder" style="text-align:center; padding:40px; border:2px dashed #ccc;">
+              {%- if collection == blank -%}
+                <p>Aba {{ forloop.index }}: selecione uma coleção no menu lateral.</p>
+              {%- else -%}
+                <p>Coleção "{{ collection.title }}": carregue uma imagem no menu lateral.</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
         {%- endfor -%}
 
         {%- if section.blocks.size == 0 and request.design_mode -%}
-          <div class="section-placeholder" style="text-align: center; padding: 60px; border: 2px dashed #ccc; background: #f9f9f9;">
+          <div class="section-placeholder" style="text-align:center; padding:60px; border:2px dashed #ccc; background:#f9f9f9;">
             <h3 class="heading h3">Configuração Necessária</h3>
             <p>Adicione blocos de "Coleção" no menu lateral para começar a exibir seus produtos aqui.</p>
           </div>
         {%- endif -%}
       </div>
+
     </div>
   </div>
 </section>
 
 <style>
+  /* ===== NAVEGAÇÃO ===== */
   .tabbed-collections {
     margin-top: 30px;
   }
@@ -93,7 +104,10 @@
     white-space: nowrap;
   }
 
+  /* Links de navegação (antes eram <button>, agora são <a>) */
   .tabs-nav__button {
+    display: inline-block;
+    text-decoration: none;
     background: none;
     border: none;
     padding: 12px 20px;
@@ -109,35 +123,48 @@
 
   .tabs-nav__button:hover {
     color: var(--accent-color);
+    text-decoration: none;
   }
 
-  .tabs-nav__button.is-active {
-    color: var(--accent-color);
+  .tabs-nav__button--empty {
+    cursor: default;
+    opacity: 0.5;
   }
 
-  .tabs-nav__button.is-active::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background-color: var(--accent-color);
+  /* ===== GRADE DE BANNERS ===== */
+  .tabs-content--grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
   }
 
+  @media screen and (max-width: 640px) {
+    .tabs-content--grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+  }
+
+  /* ===== CARD / BANNER ===== */
   .tab-panel__image-wrapper {
     display: block;
-    margin: 0 auto;
-    max-width: 600px; /* Alinhado com a recomendação da seção de Coleções */
     border-radius: var(--border-radius-theme);
     overflow: hidden;
     position: relative;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .tab-panel__image-wrapper:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.18);
   }
 
   .tab-panel__image-wrapper .aspect-ratio {
     position: relative;
-    padding-bottom: 100%; /* Proporção 1:1 igual às Coleções */
+    padding-bottom: 100%;
     height: 0;
+    overflow: hidden;
   }
 
   .tab-panel__image {
@@ -147,72 +174,29 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.4s ease;
   }
 
-  @media screen and (max-width: 640px) {
-    .tab-panel__image-wrapper {
-      margin-bottom: 20px;
-    }
+  .tab-panel__image-wrapper:hover .tab-panel__image {
+    transform: scale(1.05);
   }
 
-  .section__footer {
+  /* Label sobre o banner */
+  .tab-panel__label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 16px;
+    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
     text-align: center;
-    margin-top: 40px;
   }
 </style>
-
-<script>
-  (function() {
-    function initTabs() {
-      const section = document.querySelector('[data-section-id="{{ section.id }}"]');
-      if (!section) return;
-
-      const tabButtons = section.querySelectorAll('.tabs-nav__button');
-      const tabPanels = section.querySelectorAll('.tab-panel');
-
-      tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          const targetId = button.getAttribute('data-tab-target');
-          const targetPanel = section.querySelector(`#${targetId}`);
-
-          if (!targetPanel) return;
-
-          // Desativar todos
-          tabButtons.forEach(btn => {
-            btn.classList.remove('is-active');
-            btn.setAttribute('aria-expanded', 'false');
-          });
-          tabPanels.forEach(panel => {
-            panel.classList.remove('is-visible');
-            panel.style.display = 'none';
-          });
-
-          // Ativar selecionado
-          button.classList.add('is-active');
-          button.setAttribute('aria-expanded', 'true');
-          targetPanel.style.display = 'block';
-          
-          // Trigger lazyload if theme uses it
-          window.dispatchEvent(new Event('resize'));
-        });
-      });
-    }
-
-    // Inicialização segura
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initTabs);
-    } else {
-      initTabs();
-    }
-
-    // Suporte ao editor da Shopify
-    document.addEventListener('shopify:section:load', function(event) {
-      if (event.detail.sectionId === '{{ section.id }}') {
-        initTabs();
-      }
-    });
-  })();
-</script>
 
 {% schema %}
 {
@@ -240,12 +224,12 @@
           "type": "image_picker",
           "id": "image",
           "label": "Imagem da Coleção",
-          "info": "Banner opcional para aparecer acima dos produtos."
+          "info": "Banner que aparece na grade de categorias."
         },
         {
           "type": "text",
           "id": "title",
-          "label": "Título da Aba",
+          "label": "Título da Aba / Banner",
           "info": "Se vazio, usa o nome da coleção."
         }
       ]
