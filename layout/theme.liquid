@@ -2,13 +2,7 @@
 <html class="no-js" lang="{{ request.locale.iso_code }}">{% render 'fk-lck' %}
 
   <head>
-    <script
-  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-  data-utmify-prevent-xcod-sck
-  data-utmify-prevent-subids
-  async
-  defer
-></script>
+
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2BR1QDLMF8"></script>
 <script>
@@ -26,14 +20,6 @@
 
    <!-- Meta Pixel Code -->
    
-<script>
-  window.pixelId = "68e98ff4ff13fbb89ae5b10e";
-  var a = document.createElement("script");
-  a.setAttribute("async", "");
-  a.setAttribute("defer", "");
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-  document.head.appendChild(a);
-</script>
 <!-- End Meta Pixel Code -->
 
 
@@ -260,5 +246,28 @@
 
 <!-- Não remova. Checkout Yampi. -->
 {% capture yampi_snippet_content %}{% include 'YampiSnippet' %}{% endcapture %} {% unless yampi_snippet_content contains 'Liquid error' %} {% include 'YampiSnippet' %} {% endunless %}
-<!-- Não remova. Checkout Yampi. --> </body>
+<!-- Não remova. Checkout Yampi. -->
+
+<!-- UTMify: carregado após o load para não interferir no histórico de navegação -->
+<script>
+window.addEventListener('load', function() {
+  // Script principal UTMify (rastreamento de UTMs)
+  var utmScript = document.createElement('script');
+  utmScript.src = 'https://cdn.utmify.com.br/scripts/utms/latest.js';
+  utmScript.setAttribute('data-utmify-prevent-xcod-sck', '');
+  utmScript.setAttribute('data-utmify-prevent-subids', '');
+  utmScript.async = true;
+  utmScript.defer = true;
+  document.body.appendChild(utmScript);
+
+  // Pixel UTMify
+  window.pixelId = "68e98ff4ff13fbb89ae5b10e";
+  var pixelScript = document.createElement('script');
+  pixelScript.src = 'https://cdn.utmify.com.br/scripts/pixel/pixel.js';
+  pixelScript.async = true;
+  pixelScript.defer = true;
+  document.body.appendChild(pixelScript);
+});
+</script>
+<!-- Fim UTMify --></body>
 </html>
