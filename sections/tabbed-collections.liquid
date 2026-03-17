@@ -42,7 +42,7 @@
             
             {%- if collection != blank -%}
               {%- if block.settings.image != blank -%}
-                <a href="{{ collection.url }}" class="tab-panel__image-wrapper">
+                <a href="{{ collection.url }}" class="tab-panel__image-wrapper" rel="noopener" data-no-instant>
                   <div class="aspect-ratio">
                     <img class="tab-panel__image lazyload image--fade-in" 
                          data-src="{{ block.settings.image | img_url: '600x600', crop: 'center' }}" 

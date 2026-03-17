@@ -18,7 +18,7 @@
             {%- assign block_image = block.settings.image -%}
             {%- assign block_title = block.settings.title -%}
 
-            <a href="{{ block_link }}" class="cc-slider-card">
+            <a href="{{ block_link }}" class="cc-slider-card" rel="noopener" data-no-instant>
 
               {%- if block_image != blank -%}
                 {%- assign img_url = block_image | img_url: '800x1000', crop: 'center' -%}
@@ -265,11 +265,20 @@
     var swiperEl = sectionEl.querySelector('.cc-slider-swiper');
     if (!swiperEl || swiperEl.swiper) return;
 
-    new Swiper(swiperEl, {
+    var isDragging = false;
+
+    var swiper = new Swiper(swiperEl, {
       grabCursor: true,
       slidesPerView: 1.5,
       spaceBetween: 12,
       centeredSlides: false,
+      allowTouchMove: true,
+      threshold: 10,
+
+      on: {
+        touchStart: function() { isDragging = false; },
+        touchMove: function() { isDragging = true; }
+      },
 
       navigation: {
         nextEl: sectionEl.querySelector('.cc-slider-btn--next'),
@@ -277,18 +286,26 @@
       },
 
       breakpoints: {
-        // Tablet
         640: {
           slidesPerView: 2.5,
           spaceBetween: 16,
         },
-        // Desktop
         769: {
           slidesPerView: 4.5,
           spaceBetween: 20,
           loop: false,
         },
       },
+    });
+
+    // Garante que drag nao aciona o link do card
+    swiperEl.querySelectorAll('.cc-slider-card').forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        if (isDragging) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
     });
   }
 
