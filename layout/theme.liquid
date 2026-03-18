@@ -3,6 +3,53 @@
 
   <head>
 
+<!-- Sistema de Captura de UTMs e Integração UTMify Otimizada -->
+<script>
+  (function() {
+    try {
+      var urlParams = new URLSearchParams(window.location.search);
+      var trackedParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'src', 'sck', 'xcod'];
+      var utmFound = false;
+
+      // 1. Persistência em Cookies e LocalStorage (Captura Silenciosa)
+      trackedParams.forEach(function(param) {
+        if (urlParams.has(param)) {
+          utmFound = true;
+          var val = urlParams.get(param);
+          // Salva no LocalStorage
+          localStorage.setItem(param, val);
+          // Salva no Cookie (válido por 30 dias)
+          var expires = new Date();
+          expires.setTime(expires.getTime() + (30 * 24 * 60 * 60 * 1000));
+          document.cookie = param + '=' + val + '; expires=' + expires.toUTCString() + '; path=/';
+        }
+      });
+
+      // 2. Limpeza de URL sem quebrar o histórico (uso obrigatório de replaceState)
+      if (utmFound) {
+        var cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState(null, '', cleanUrl); // Mantém o botão 'voltar' funcionando perfeitamente
+        }
+      }
+    } catch (err) {
+      console.warn('Erro na captura silenciosa de UTMs', err);
+    }
+  })();
+</script>
+
+<!-- Scripts Oficiais UTMify -->
+<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-xcod-sck data-utmify-prevent-subids async defer></script>
+<script>
+  window.pixelId = "68e98ff4ff13fbb89ae5b10e";
+  var pixelScript = document.createElement("script");
+  pixelScript.src = "https://cdn.utmify.com.br/scripts/pixel/pixel.js";
+  pixelScript.async = true;
+  pixelScript.defer = true;
+  document.head.appendChild(pixelScript);
+</script>
+<!-- Fim Integração UTMify -->
+
 
 <!-- Don't Remove this code. CartPanda App code. -->
 {% capture cartX_snippet_content %}{% include 'cartxCheckoutSnippet' %}{% endcapture %} {% unless cartX_snippet_content contains 'Liquid error' %} {% include 'cartxCheckoutSnippet' %} {% endunless %}
