@@ -1584,6 +1584,28 @@
       },
       "slideshow_ccFw47": {
         "type": "slideshow",
+        "blocks": {
+          "image_ehQcyq": {
+            "type": "image",
+            "settings": {
+              "image": "shopify://shop_images/Design_sem_nome_32_e0768797-3750-4bd7-bac2-02a643f7f3d4.png",
+              "mobile_image": "shopify://shop_images/Design_sem_nome_32_1c816684-9e33-4884-9f9d-d0a26dc1ef5d.png",
+              "show_overlay": false,
+              "overlay_opacity": 31,
+              "text_color": "#ffffff",
+              "title": "",
+              "content": "",
+              "content_position": "middle_center",
+              "button_background": "#ffffff",
+              "button_text_color": "#000000",
+              "button_text": "",
+              "link": "https://wa.me/message/YWY7MZVMCVSUG1"
+            }
+          }
+        },
+        "block_order": [
+          "image_ehQcyq"
+        ],
         "settings": {
           "edge_to_edge": true,
           "section_size": "preserve_ratio",
