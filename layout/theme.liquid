@@ -25,11 +25,18 @@
         }
       });
 
-      // 2. Limpeza de URL sem quebrar o histórico (uso obrigatório de replaceState)
+      // 2. Limpeza de URL sem quebrar o histórico (preservando outros parâmetros como ?variant=)
       if (utmFound) {
-        var cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        trackedParams.forEach(function(param) {
+          urlParams.delete(param);
+        });
+        var newSearch = urlParams.toString();
+        var cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + (newSearch ? '?' + newSearch : '') + window.location.hash;
+        
         if (window.history && window.history.replaceState) {
-          window.history.replaceState(null, '', cleanUrl); // Mantém o botão 'voltar' funcionando perfeitamente
+          setTimeout(function() {
+            window.history.replaceState(null, document.title, cleanUrl);
+          }, 50); // Timeout leve para evitar bloqueio de bfcache e history do navegador
         }
       }
     } catch (err) {
