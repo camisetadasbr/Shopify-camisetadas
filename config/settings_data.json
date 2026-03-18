@@ -1461,7 +1461,7 @@
         "type": "rich-text",
         "name": "Rich text",
         "settings": {
-          "text_width": "narrow",
+          "text_width": "regular",
           "title": "",
           "content": "<h6><strong>SEU TIME, SUA EMOÇÃO, VISTA AGORA!</strong></h6><h1><strong>TIMES BRASILEIROS 🇧🇷</strong></h1>",
           "button_text": "",
