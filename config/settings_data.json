@@ -810,6 +810,7 @@
         "blocks": {
           "36c1078b-9d5a-4797-9be8-8ef5b1a732b0-image-1": {
             "type": "image",
+            "disabled": true,
             "settings": {
               "image": "shopify://shop_images/NA_COMPRA_DE_3_PECAS_1800_x_600_px_18.png",
               "mobile_image": "shopify://shop_images/ChatGPT_Image_17_de_mar._de_2026_11_25_23.png",
@@ -1451,7 +1452,7 @@
           "products_count": 10,
           "layout": "vertical",
           "stack_desktop": false,
-          "show_quick_buy": false,
+          "show_quick_buy": true,
           "link_title": "",
           "link_url": ""
         }
@@ -1580,6 +1581,38 @@
           "round_images": true,
           "show_collection_title": true
         }
+      },
+      "slideshow_ccFw47": {
+        "type": "slideshow",
+        "blocks": {
+          "image_ehQcyq": {
+            "type": "image",
+            "settings": {
+              "image": "shopify://shop_images/ChatGPT_Image_18_de_mar._de_2026_04_26_58_623906b3-e303-4973-ac26-232a6aceb808.png",
+              "mobile_image": "shopify://shop_images/ChatGPT_Image_18_de_mar._de_2026_04_26_58.png",
+              "show_overlay": false,
+              "overlay_opacity": 31,
+              "text_color": "#ffffff",
+              "title": "",
+              "content": "",
+              "content_position": "middle_center",
+              "button_background": "#ffffff",
+              "button_text_color": "#000000",
+              "button_text": "",
+              "link": "https://wa.me/message/YWY7MZVMCVSUG1"
+            }
+          }
+        },
+        "block_order": [
+          "image_ehQcyq"
+        ],
+        "settings": {
+          "edge_to_edge": true,
+          "section_size": "preserve_ratio",
+          "carousel_effect": "slide",
+          "autoplay": true,
+          "cycle_speed": 5
+        }
       }
     },
     "content_for_index": [
@@ -1595,6 +1628,7 @@
       "36c1078b-9d5a-4797-9be8-8ef5b1a732b0",
       "rich_text_R8MnBB",
       "collection_list_P6tjgf",
+      "slideshow_ccFw47",
       "rich_text_qe4XnQ",
       "collection_list_BWtbpU",
       "16153539675ef431a7",
