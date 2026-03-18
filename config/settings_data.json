@@ -1437,7 +1437,7 @@
         "settings": {
           "text_width": "regular",
           "title": "",
-          "content": "<h1>SEU JOGO, SUAS REGRAS<br/></h1><h6>encontre o estilo que representa você 🫵<br/><br/></h6>",
+          "content": "<h6><strong>ENCONTRE O ESTILO QUE REPRESENTA VOCÊ 🫵</strong></h6><h1><strong>SEU JOGO, SUAS REGRAS</strong><br/><br/></h1>",
           "button_text": "",
           "button_link": "shopify://collections/all"
         }
@@ -1460,9 +1460,9 @@
         "type": "rich-text",
         "name": "Rich text",
         "settings": {
-          "text_width": "regular",
+          "text_width": "narrow",
           "title": "",
-          "content": "<h1>TIMES BRASILEIROS 🇧🇷</h1><h6>Seu time, sua emoção. Vista agora!</h6>",
+          "content": "<h6><strong>SEU TIME, SUA EMOÇÃO, VISTA AGORA!</strong></h6><h1><strong>TIMES BRASILEIROS 🇧🇷</strong></h1>",
           "button_text": "",
           "button_link": "shopify://collections/all"
         }
