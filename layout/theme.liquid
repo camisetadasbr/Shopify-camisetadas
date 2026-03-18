@@ -3,15 +3,7 @@
 
   <head>
 
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2BR1QDLMF8"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-2BR1QDLMF8');
-</script>
 <!-- Don't Remove this code. CartPanda App code. -->
 {% capture cartX_snippet_content %}{% include 'cartxCheckoutSnippet' %}{% endcapture %} {% unless cartX_snippet_content contains 'Liquid error' %} {% include 'cartxCheckoutSnippet' %} {% endunless %}
 <!-- Don't Remove this code. CaCartPandartX App code. -->
@@ -248,25 +240,5 @@
 {% capture yampi_snippet_content %}{% include 'YampiSnippet' %}{% endcapture %} {% unless yampi_snippet_content contains 'Liquid error' %} {% include 'YampiSnippet' %} {% endunless %}
 <!-- Não remova. Checkout Yampi. -->
 
-<!-- UTMify: Carregamento nativo com defer (previne interrupção do pushState inicial) -->
-<!-- Script desenvolvido para o tracking não criar redundâncias no botão 'voltar' (history API) -->
-<script>
-  // Script principal UTMify (rastreamento de UTMs)
-  var utmScript = document.createElement('script');
-  utmScript.src = 'https://cdn.utmify.com.br/scripts/utms/latest.js';
-  utmScript.setAttribute('data-utmify-prevent-xcod-sck', '');
-  utmScript.setAttribute('data-utmify-prevent-subids', '');
-  utmScript.async = true;
-  utmScript.defer = true;
-  document.body.appendChild(utmScript);
-
-  // Pixel UTMify
-  window.pixelId = "68e98ff4ff13fbb89ae5b10e";
-  var pixelScript = document.createElement('script');
-  pixelScript.src = 'https://cdn.utmify.com.br/scripts/pixel/pixel.js';
-  pixelScript.async = true;
-  pixelScript.defer = true;
-  document.body.appendChild(pixelScript);
-</script>
-<!-- Fim UTMify --></body>
+<!-- UTMify (Temporariamente removido para teste de history API) --></body>
 </html>
