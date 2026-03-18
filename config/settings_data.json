@@ -1455,6 +1455,131 @@
           "link_title": "",
           "link_url": ""
         }
+      },
+      "rich_text_qe4XnQ": {
+        "type": "rich-text",
+        "name": "Rich text",
+        "settings": {
+          "text_width": "regular",
+          "title": "",
+          "content": "<h1>TIMES BRASILEIROS 🇧🇷</h1><h6>Seu time, sua emoção. Vista agora!</h6>",
+          "button_text": "",
+          "button_link": "shopify://collections/all"
+        }
+      },
+      "collection_list_BWtbpU": {
+        "type": "collection-list",
+        "blocks": {
+          "collection_x8JJbF": {
+            "type": "collection",
+            "settings": {
+              "collection": "corinthians"
+            }
+          },
+          "collection_mttK6T": {
+            "type": "collection",
+            "settings": {
+              "collection": "palmeiras"
+            }
+          },
+          "collection_nRfGrw": {
+            "type": "collection",
+            "settings": {
+              "collection": "flamengo"
+            }
+          },
+          "collection_Hx4MiT": {
+            "type": "collection",
+            "settings": {
+              "collection": "bahia"
+            }
+          },
+          "collection_jcLRmE": {
+            "type": "collection",
+            "settings": {
+              "collection": "fluminense"
+            }
+          },
+          "collection_ECazcz": {
+            "type": "collection",
+            "settings": {
+              "collection": "botafogo"
+            }
+          },
+          "collection_zbVMad": {
+            "type": "collection",
+            "settings": {
+              "collection": "sao-paulo"
+            }
+          },
+          "collection_xQPNgR": {
+            "type": "collection",
+            "settings": {
+              "collection": "iternacional"
+            }
+          },
+          "collection_Yegtap": {
+            "type": "collection",
+            "settings": {
+              "collection": "gremio"
+            }
+          },
+          "collection_EhFUDG": {
+            "type": "collection",
+            "settings": {
+              "collection": "vitoria"
+            }
+          },
+          "collection_Aw3NTw": {
+            "type": "collection",
+            "settings": {
+              "collection": "atletico-mineiro"
+            }
+          },
+          "collection_NQkfr9": {
+            "type": "collection",
+            "settings": {
+              "collection": "fortaleza"
+            }
+          },
+          "collection_cKgeGL": {
+            "type": "collection",
+            "settings": {
+              "collection": "vasco"
+            }
+          },
+          "collection_dJmLie": {
+            "type": "collection",
+            "settings": {
+              "collection": "athletico-paranaense"
+            }
+          }
+        },
+        "block_order": [
+          "collection_x8JJbF",
+          "collection_mttK6T",
+          "collection_nRfGrw",
+          "collection_Hx4MiT",
+          "collection_jcLRmE",
+          "collection_ECazcz",
+          "collection_zbVMad",
+          "collection_xQPNgR",
+          "collection_Yegtap",
+          "collection_EhFUDG",
+          "collection_Aw3NTw",
+          "collection_NQkfr9",
+          "collection_cKgeGL",
+          "collection_dJmLie"
+        ],
+        "name": "Collection list",
+        "settings": {
+          "title": "",
+          "link_title": "View all",
+          "collection_dm_new": true,
+          "link": "shopify://collections",
+          "round_images": true,
+          "show_collection_title": true
+        }
       }
     },
     "content_for_index": [
@@ -1470,6 +1595,8 @@
       "36c1078b-9d5a-4797-9be8-8ef5b1a732b0",
       "rich_text_R8MnBB",
       "collection_list_P6tjgf",
+      "rich_text_qe4XnQ",
+      "collection_list_BWtbpU",
       "16153539675ef431a7",
       "1159d351-1ffa-467c-a72d-ee3626be9d07",
       "1649913264519d35a7"
