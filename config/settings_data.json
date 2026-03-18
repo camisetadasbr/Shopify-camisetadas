@@ -1437,67 +1437,23 @@
         "settings": {
           "text_width": "regular",
           "title": "",
-          "content": "<h1>SEU JOGO, SUAS REGRAS🫵<br/></h1><h6>encontre o estilo que representa você!<br/><br/></h6>",
+          "content": "<h1>SEU JOGO, SUAS REGRAS<br/></h1><h6>encontre o estilo que representa você 🫵<br/><br/></h6>",
           "button_text": "",
           "button_link": "shopify://collections/all"
         }
       },
-      "collection_list_NNLCT8": {
-        "type": "collection-list",
-        "blocks": {
-          "collection_cnDNYm": {
-            "type": "collection",
-            "settings": {
-              "collection": ""
-            }
-          },
-          "collection_fnzcii": {
-            "type": "collection",
-            "settings": {
-              "collection": ""
-            }
-          },
-          "collection_qxk4hN": {
-            "type": "collection",
-            "settings": {
-              "collection": ""
-            }
-          },
-          "collection_fQhbH3": {
-            "type": "collection",
-            "settings": {
-              "collection": ""
-            }
-          },
-          "collection_kqt6k9": {
-            "type": "collection",
-            "settings": {
-              "collection": ""
-            }
-          },
-          "collection_VQwAYi": {
-            "type": "collection",
-            "settings": {
-              "collection": ""
-            }
-          }
-        },
-        "block_order": [
-          "collection_cnDNYm",
-          "collection_fnzcii",
-          "collection_qxk4hN",
-          "collection_fQhbH3",
-          "collection_kqt6k9",
-          "collection_VQwAYi"
-        ],
-        "name": "Collection list",
+      "featured_collection_kamqMw": {
+        "type": "featured-collection",
+        "name": "Featured collection",
         "settings": {
-          "title": "MAIS VENDIDOS",
-          "link_title": "VER AGORA",
-          "collection_dm_new": true,
-          "link": "shopify://collections/mais-vendidos",
-          "round_images": true,
-          "show_collection_title": true
+          "collection": "esquenta-hexa",
+          "title": "",
+          "products_count": 10,
+          "layout": "vertical",
+          "stack_desktop": false,
+          "show_quick_buy": false,
+          "link_title": "",
+          "link_url": ""
         }
       }
     },
@@ -1508,7 +1464,7 @@
       "rich_text_HNwRiy",
       "collection_carousel_slider_jd6nAd",
       "collection_carousel_slider_MqkHeA",
-      "collection_list_NNLCT8",
+      "featured_collection_kamqMw",
       "16153541158fc73818",
       "a50ea995-6f1f-4d09-adba-422a0c918c60",
       "36c1078b-9d5a-4797-9be8-8ef5b1a732b0",
