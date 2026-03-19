@@ -1634,7 +1634,14 @@
       "16153539675ef431a7",
       "1159d351-1ffa-467c-a72d-ee3626be9d07",
       "1649913264519d35a7"
-    ]
+    ],
+    "blocks": {
+      "pagefly-page-builder": {
+        "type": "shopify://apps/pagefly-page-builder/blocks/app-embed/83e179f7-59a0-4589-8c66-c0dddf959200",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   },
   "presets": {
     "Metal": {
