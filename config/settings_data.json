@@ -262,9 +262,28 @@
               "link": "shopify://collections"
             }
           },
+          "image_ebm6PL": {
+            "type": "image",
+            "name": "VINI JR",
+            "settings": {
+              "image": "shopify://shop_images/Banner-BRASIL-PC_f0773b15-a668-4e79-8e30-9a906b6da61f.webp",
+              "mobile_image": "shopify://shop_images/sssssssssssss.jpg",
+              "show_overlay": false,
+              "overlay_opacity": 30,
+              "text_color": "#ffffff",
+              "title": "",
+              "content": "",
+              "content_position": "middle_center",
+              "button_background": "#ffffff",
+              "button_text_color": "#000000",
+              "button_text": "",
+              "link": "https://wa.me/5511993438628"
+            }
+          },
           "image_tYgTCX": {
             "type": "image",
             "name": "VINI JR",
+            "disabled": true,
             "settings": {
               "image": "shopify://shop_images/FRETE_GRATIS_0fde6eb8-a868-4f89-a872-38396ded08a4.png",
               "mobile_image": "shopify://shop_images/COMPRE_AGORA_4.png",
@@ -337,6 +356,7 @@
         },
         "block_order": [
           "9f42fead-398d-4445-b8d9-6962b553fb36",
+          "image_ebm6PL",
           "image_tYgTCX",
           "image_M6KWWC",
           "b0a5eeae-9b1c-4cf3-8272-55304da546ed",
