@@ -265,6 +265,7 @@
           "image_ebm6PL": {
             "type": "image",
             "name": "VINI JR",
+            "disabled": true,
             "settings": {
               "image": "shopify://shop_images/Banner-BRASIL-PC_f0773b15-a668-4e79-8e30-9a906b6da61f.webp",
               "mobile_image": "shopify://shop_images/COMPRE_AGORA_7_da27095c-2bd0-4e49-8ed0-8cc0eb3e2eea.png",
@@ -1633,6 +1634,14 @@
           "autoplay": true,
           "cycle_speed": 5
         }
+      },
+      "custom_html_e4Pr4n": {
+        "type": "custom-html",
+        "name": "Custom HTML",
+        "settings": {
+          "title": "",
+          "html": "<div class=\"countdown-timer-block\" countdown-timer-id=\"cmn9kv0cg006cuk5w2p035zqr\"></div>"
+        }
       }
     },
     "content_for_index": [
@@ -1653,7 +1662,8 @@
       "collection_list_BWtbpU",
       "16153539675ef431a7",
       "1159d351-1ffa-467c-a72d-ee3626be9d07",
-      "1649913264519d35a7"
+      "1649913264519d35a7",
+      "custom_html_e4Pr4n"
     ],
     "blocks": {
       "pagefly-page-builder": {
