@@ -14145,4 +14145,29 @@ input.qtyminus {
 .price-without-discount {
   color: var(--product-cor-do-preco-semdesc);
 }
+.guia-medidas-camisetadas {
+  margin-top: 16px;
+  border-top: 1px solid #eee;
+  padding-top: 12px;
+}
 
+.guia-medidas-camisetadas summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: #0d2f6f;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.guia-medidas-camisetadas summary::marker {
+  display: none;
+}
+
+.guia-medidas-camisetadas img {
+  margin-top: 12px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+}
