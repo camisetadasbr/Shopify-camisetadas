@@ -66,8 +66,21 @@
           {%- endif -%}
 
           <div class="product-block-list__item product-block-list__item--info">
-            {% render 'product-info' %}
-          </div>
+  {% render 'product-info' %}
+
+  {% if product.handle == 'camisa-amarela-brasil-2026' %}
+    <details class="guia-medidas-camisetadas">
+      <summary>📏 Qual é meu tamanho ideal?</summary>
+
+      <img 
+        src="https://cdn.shopify.com/s/files/1/0672/4576/8933/files/Design_sem_nome_39_a91e7254-691e-468f-837f-5560b282a94e.png?v=1775067081" 
+        alt="Guia de Medidas Camisetadas"
+        loading="lazy"
+      >
+    </details>
+  {% endif %}
+
+</div>
 
           {%- if product.description != blank -%}
             <div class="product-block-list__item product-block-list__item--description">
