@@ -330,6 +330,17 @@
               {%- endcase -%}
             </div>
           {%- endfor -%}
+          
+          {% if product.handle == 'camisa-amarela-brasil-2026' %}
+            <details class="guia-medidas-camisetadas">
+              <summary>📏 Qual é meu tamanho ideal?</summary>
+              <img 
+                src="https://cdn.shopify.com/s/files/1/0672/4576/8933/files/Design_sem_nome_39_a91e7254-691e-468f-837f-5560b282a94e.png?v=1775067081" 
+                alt="Guia de Medidas Camisetadas"
+                loading="lazy"
+              >
+            </details>
+          {% endif %}
 
           <div class="no-js product-form__option">
             <label for="product-select-{{ product.id }}">{{ 'product.form.variant' | t }}</label>
