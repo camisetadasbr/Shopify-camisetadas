@@ -14172,31 +14172,44 @@ input.qtyminus {
   border: 1px solid #e5e5e5;
 }
 
-.pix-inline-price {
+.pix-conversion-line {
   display: flex;
   align-items: center;
-  gap: 5px;
-  margin-top: 4px;
-  margin-bottom: 2px;
-  line-height: 1;
-  font-size: 13px;
-  font-weight: 700;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+  margin-bottom: 3px;
+  line-height: 1.1;
 }
 
-.pix-inline-icon {
-  display: flex;
-  align-items: center;
-  color: var(--product-on-sale-accent);
+.pix-real-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
-.pix-inline-value {
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--product-on-sale-accent);
-}
-
-.pix-inline-text {
-  font-size: 13px;
+.pix-conversion-main {
+  font-size: 14px;
   font-weight: 600;
-  color: #6b7280;
+  color: #1f2937;
+}
+
+.pix-conversion-main strong {
+  font-size: 16px;
+  font-weight: 800;
+  color: #18a957;
+}
+
+.pix-conversion-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(24, 169, 87, 0.12);
+  color: #18a957;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
