@@ -14172,54 +14172,52 @@ input.qtyminus {
   border: 1px solid #e5e5e5;
 }
 
-.pix-conversion-wrapper {
+.pix-final {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-top: 6px;
-  margin-bottom: 3px;
+  gap: 3px;
 }
 
-.pix-conversion-line {
+.pix-final-line {
   display: flex;
   align-items: center;
   gap: 6px;
-  line-height: 1.1;
 }
 
-.pix-real-icon {
-  width: 14px;
-  height: 14px;
+.pix-final-icon {
+  width: 16px;
+  height: 16px;
   object-fit: contain;
-  flex-shrink: 0;
-  display: block;
 }
 
-.pix-conversion-main {
+.pix-final-text {
   font-size: 14px;
   font-weight: 600;
   color: #1f2937;
 }
 
-.pix-conversion-main strong {
+.pix-final-text strong {
   font-size: 16px;
   font-weight: 800;
   color: #18a957;
 }
 
-.pix-conversion-badge {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-self: center;
-  margin-top: 4px;
-  padding: 3px 10px;
+/* 🔥 AQUI ESTÁ A MÁGICA */
+.pix-final-badge {
+  margin-left: 22px; /* alinha com o texto (não com o ícone) */
+
+  display: inline-block;
+  padding: 3px 8px;
+
   border-radius: 999px;
-  background: rgba(24, 169, 87, 0.12);
+
+  background: #e6f7ef; /* verde bem leve */
   color: #18a957;
+
   font-size: 10px;
   font-weight: 800;
-  text-transform: uppercase;
+
   letter-spacing: 0.3px;
-  line-height: 1;
 }
