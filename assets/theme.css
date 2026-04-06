@@ -14207,7 +14207,7 @@ input.qtyminus {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: 10px;
   margin-bottom: 6px;
   flex-wrap: wrap;
 }
@@ -14226,9 +14226,9 @@ input.qtyminus {
 
 .product-pix-badge {
   font-size: 11px;
-  font-weight: 900;
-  color: #ffffff;
-  background: #0f9f4b;
+  font-weight: 800;
+  color: #0f9f4b;
+  background: rgba(15, 159, 75, 0.15);
   padding: 4px 10px;
   border-radius: 999px;
   line-height: 1;
