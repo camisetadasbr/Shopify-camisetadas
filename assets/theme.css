@@ -14173,16 +14173,14 @@ input.qtyminus {
 }
 
 .pix-premium-box {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
   margin-top: 6px;
   margin-bottom: 2px;
-  padding: 8px 10px;
-  background: linear-gradient(180deg, rgba(50, 188, 173, 0.10) 0%, rgba(50, 188, 173, 0.05) 100%);
-  border: 1px solid rgba(50, 188, 173, 0.22);
-  border-radius: 12px;
-  line-height: 1.1;
+  padding: 6px 0;
+  background: transparent;
+  border: none;
 }
 
 .pix-premium-line {
@@ -14196,26 +14194,23 @@ input.qtyminus {
   align-items: center;
   justify-content: center;
   color: #32bcad;
-  flex-shrink: 0;
 }
 
 .pix-premium-text {
   font-size: 12px;
-  font-weight: 700;
-  color: #4b5563;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
+  font-weight: 600;
+  color: #6b7280;
 }
 
 .pix-premium-price {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
-  color: #111827;
+  color: #32bcad;
 }
 
 .pix-premium-save {
   font-size: 11px;
-  font-weight: 600;
-  color: #32bcad;
+  font-weight: 500;
+  color: #9ca3af;
   padding-left: 21px;
 }
