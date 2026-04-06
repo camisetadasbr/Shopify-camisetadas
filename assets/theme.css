@@ -14177,24 +14177,26 @@ input.qtyminus {
   flex-direction: column;
   align-items: flex-start;
   margin-top: 6px;
-  gap: 3px;
+  gap: 2px;
 }
 
 .pix-final-line {
   display: flex;
   align-items: center;
   gap: 6px;
+  line-height: 1;
 }
 
 .pix-final-icon {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   object-fit: contain;
+  display: block;
 }
 
 .pix-final-text {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   color: #1f2937;
 }
 
@@ -14204,20 +14206,18 @@ input.qtyminus {
   color: #18a957;
 }
 
-/* 🔥 AQUI ESTÁ A MÁGICA */
 .pix-final-badge {
-  margin-left: 22px; /* alinha com o texto (não com o ícone) */
-
-  display: inline-block;
-  padding: 3px 8px;
-
+  margin-left: 21px;
+  margin-top: 1px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
   border-radius: 999px;
-
-  background: #e6f7ef; /* verde bem leve */
+  background: rgba(24, 169, 87, 0.10);
   color: #18a957;
-
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 800;
-
-  letter-spacing: 0.3px;
+  letter-spacing: 0.4px;
+  line-height: 1.1;
 }

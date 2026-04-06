@@ -251,12 +251,12 @@
 {% assign pix_discount = product.price | minus: pix_price %}
 
 <div class="pix-final">
-  
   <div class="pix-final-line">
     <img
       src="https://cdn.shopify.com/s/files/1/0672/4576/8933/files/pixx.svg?v=1775510446"
       alt="PIX"
       class="pix-final-icon"
+      loading="lazy"
     >
 
     <span class="pix-final-text">
@@ -267,7 +267,6 @@
   <div class="pix-final-badge">
     ECONOMIZE {{ pix_discount | money }}
   </div>
-
 </div>
 
       {% assign divididopor = settings.qty_vezes %}
