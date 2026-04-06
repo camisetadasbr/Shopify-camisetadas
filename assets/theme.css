@@ -14145,3 +14145,77 @@ input.qtyminus {
 .price-without-discount {
   color: var(--product-cor-do-preco-semdesc);
 }
+.guia-medidas-camisetadas {
+  margin-top: 16px;
+  border-top: 1px solid #eee;
+  padding-top: 12px;
+}
+
+.guia-medidas-camisetadas summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: #0d2f6f;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.guia-medidas-camisetadas summary::marker {
+  display: none;
+}
+
+.guia-medidas-camisetadas img {
+  margin-top: 12px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+}
+
+.pix-premium-box {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 6px;
+  margin-bottom: 2px;
+  padding: 8px 10px;
+  background: linear-gradient(180deg, rgba(50, 188, 173, 0.10) 0%, rgba(50, 188, 173, 0.05) 100%);
+  border: 1px solid rgba(50, 188, 173, 0.22);
+  border-radius: 12px;
+  line-height: 1.1;
+}
+
+.pix-premium-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pix-premium-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #32bcad;
+  flex-shrink: 0;
+}
+
+.pix-premium-text {
+  font-size: 12px;
+  font-weight: 700;
+  color: #4b5563;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.pix-premium-price {
+  font-size: 15px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.pix-premium-save {
+  font-size: 11px;
+  font-weight: 600;
+  color: #32bcad;
+  padding-left: 21px;
+}
