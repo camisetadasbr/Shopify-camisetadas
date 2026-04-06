@@ -14172,52 +14172,34 @@ input.qtyminus {
   border: 1px solid #e5e5e5;
 }
 
-.pix-final {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-top: 6px;
-  gap: 2px;
-}
-
-.pix-final-line {
+.pix-inline-final {
   display: flex;
   align-items: center;
   gap: 6px;
+  margin-top: 6px;
+  margin-bottom: 3px;
   line-height: 1;
+  flex-wrap: wrap;
 }
 
-.pix-final-icon {
-  width: 15px;
-  height: 15px;
-  object-fit: contain;
-  display: block;
-}
-
-.pix-final-text {
+.pix-inline-text {
   font-size: 14px;
   font-weight: 700;
   color: #1f2937;
 }
 
-.pix-final-text strong {
+.pix-inline-text strong {
   font-size: 16px;
   font-weight: 800;
   color: #18a957;
 }
 
-.pix-final-badge {
-  margin-left: 21px;
-  margin-top: 1px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: rgba(24, 169, 87, 0.10);
-  color: #18a957;
-  font-size: 9px;
+.pix-inline-badge {
+  font-size: 10px;
   font-weight: 800;
-  letter-spacing: 0.4px;
-  line-height: 1.1;
+  color: #18a957;
+  background: rgba(24, 169, 87, 0.12);
+  padding: 2px 7px;
+  border-radius: 999px;
+  line-height: 1;
 }
