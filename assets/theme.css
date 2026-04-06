@@ -14172,7 +14172,7 @@ input.qtyminus {
   border: 1px solid #e5e5e5;
 }
 
-.pix-inline-final {
+.pix-clean {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -14182,23 +14182,23 @@ input.qtyminus {
   flex-wrap: wrap;
 }
 
-.pix-inline-text {
+.pix-clean-text {
   font-size: 14px;
   font-weight: 700;
   color: #1f2937;
 }
 
-.pix-inline-text strong {
+.pix-clean-text strong {
   font-size: 16px;
   font-weight: 800;
-  color: #18a957;
+  color: #0f9f4b;
 }
 
-.pix-inline-badge {
+.pix-clean-badge {
   font-size: 10px;
   font-weight: 800;
-  color: #18a957;
-  background: rgba(24, 169, 87, 0.12);
+  color: #0f9f4b;
+  background: rgba(15, 159, 75, 0.18);
   padding: 2px 7px;
   border-radius: 999px;
   line-height: 1;
