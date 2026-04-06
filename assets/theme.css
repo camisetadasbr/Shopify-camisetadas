@@ -14178,21 +14178,17 @@ input.qtyminus {
   gap: 2px;
   margin-top: 6px;
   margin-bottom: 2px;
-  padding: 6px 0;
-  background: transparent;
-  border: none;
 }
 
 .pix-premium-line {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
 }
 
 .pix-premium-icon {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: center;
   color: #32bcad;
 }
 
@@ -14210,7 +14206,7 @@ input.qtyminus {
 
 .pix-premium-save {
   font-size: 11px;
-  font-weight: 500;
-  color: #9ca3af;
-  padding-left: 21px;
+  font-weight: 700;
+  color: #32bcad;
+  padding-left: 19px;
 }
