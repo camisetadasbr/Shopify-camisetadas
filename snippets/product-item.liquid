@@ -250,22 +250,23 @@
       {% assign pix_price = product.price | times: 95 | divided_by: 100 %}
 {% assign pix_discount = product.price | minus: pix_price %}
 
-<div class="pix-conversion-line">
-  
-  <img 
-    src="https://cdn.shopify.com/s/files/1/0672/4576/8933/files/58d1e4c0d00fb74e2963c2b79e79f196.jpg?v=1775509986"
-    alt="PIX"
-    class="pix-real-icon"
-  >
+<div class="pix-conversion-wrapper">
+  <div class="pix-conversion-line">
+    <img
+      src="https://cdn.shopify.com/s/files/1/0672/4576/8933/files/pixx.svg?v=1775510446"
+      alt="PIX"
+      class="pix-real-icon"
+      loading="lazy"
+    >
 
-  <span class="pix-conversion-main">
-    <strong>{{ pix_price | money }}</strong> no PIX
-  </span>
+    <span class="pix-conversion-main">
+      <strong>{{ pix_price | money }}</strong> no PIX
+    </span>
+  </div>
 
-  <span class="pix-conversion-badge">
+  <div class="pix-conversion-badge">
     economize {{ pix_discount | money }}
-  </span>
-
+  </div>
 </div>
 
       {% assign divididopor = settings.qty_vezes %}

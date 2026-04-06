@@ -14172,13 +14172,18 @@ input.qtyminus {
   border: 1px solid #e5e5e5;
 }
 
+.pix-conversion-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 6px;
+  margin-bottom: 3px;
+}
+
 .pix-conversion-line {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   gap: 6px;
-  margin-top: 6px;
-  margin-bottom: 3px;
   line-height: 1.1;
 }
 
@@ -14187,6 +14192,7 @@ input.qtyminus {
   height: 14px;
   object-fit: contain;
   flex-shrink: 0;
+  display: block;
 }
 
 .pix-conversion-main {
@@ -14205,16 +14211,15 @@ input.qtyminus {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 2px;
-
+  align-self: center;
+  margin-top: 4px;
   padding: 3px 10px;
   border-radius: 999px;
-
   background: rgba(24, 169, 87, 0.12);
   color: #18a957;
-
   font-size: 10px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.3px;
+  line-height: 1;
 }
