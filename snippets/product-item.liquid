@@ -250,14 +250,14 @@
       {% assign pix_price = product.price | times: 95 | divided_by: 100 %}
 {% assign pix_discount = product.price | minus: pix_price %}
 
-<div class="pix-inline-final">
+<div class="pix-clean">
 
-  <span class="pix-inline-text">
+  <span class="pix-clean-text">
     <strong>{{ pix_price | money }}</strong> no PIX
   </span>
 
-  <span class="pix-inline-badge">
-    -{{ pix_discount | money }}
+  <span class="pix-clean-badge">
+    ECONOMIZE {{ pix_discount | money }}
   </span>
 
 </div>
