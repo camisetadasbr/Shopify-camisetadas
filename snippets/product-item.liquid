@@ -247,6 +247,11 @@
       {%- if settings.product_price_position == 'after_title' -%}
         {{ price_list }}
       {%- endif -%}
+      {% assign pix_price = product.price | times: 95 | divided_by: 100 %}
+
+<p style="font-size: 14px; margin-bottom: 0; color: #111;">
+  no PIX por <b style="color: #0a7d2c;">{{ pix_price | money }}</b>
+</p>
 
       {% assign divididopor = settings.qty_vezes %}
       {% assign percentual = settings.porcentagem_de_juros %}
