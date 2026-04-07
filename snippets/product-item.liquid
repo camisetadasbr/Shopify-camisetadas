@@ -244,22 +244,18 @@
         {%- endif -%}
       {%- endif -%}
 
-      {%- if settings.product_price_position == 'after_title' -%}
-        {{ price_list }}
-      {%- endif -%}
-      {% assign pix_price = product.price | times: 95 | divided_by: 100 %}
-{% assign pix_discount = product.price | minus: pix_price %}
+{% assign current_price = selected_variant.price %}
+{% assign pix_price = current_price | times: 95 | divided_by: 100 %}
+{% assign pix_discount = current_price | minus: pix_price %}
 
-<div class="pix-clean">
-
-  <span class="pix-clean-text">
-    <strong>{{ pix_price | money }}</strong> no PIX
+<div class="product-pix-final" id="product-pix-final">
+  <span class="product-pix-text">
+    <strong id="product-pix-price">{{ pix_price | money }}</strong> no PIX
   </span>
 
-  <span class="pix-clean-badge">
-    ECONOMIZE {{ pix_discount | money }}
+  <span class="product-pix-badge">
+    ECONOMIZE <span id="product-pix-discount">{{ pix_discount | money }}</span>
   </span>
-
 </div>
 
       {% assign divididopor = settings.qty_vezes %}
