@@ -14263,25 +14263,13 @@ input.qtyminus {
   color: #6b7280;
   font-size: 13px;
   margin-left: 4px;
-}.product-verified-icon {
-  color: #005aff;
-  font-size: 16px;
-  margin-left: 5px;
-  position: relative;
-  top: -1px;
-}
-
-.product-stars {
-  font-size: 14px;
-  color: #f5a623;
-  font-weight: 700;
-  margin-top: 4px;
-  margin-bottom: 8px;
-  line-height: 1;
-}
-
-.product-stars span {
-  color: #6b7280;
-  font-size: 13px;
-  margin-left: 4px;
+}.sold-badge {
+  display: inline-block;
+  background: rgba(24, 169, 87, 0.1);
+  color: #18A957;
+  font-weight: 800;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  margin-bottom: 6px;
 }
