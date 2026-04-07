@@ -14233,3 +14233,11 @@ input.qtyminus {
   border-radius: 999px;
   line-height: 1;
 }
+.product-personalize {
+  display: block;
+  font-size: 16px;
+  font-weight: 800;
+  color: #ff5a00;
+  margin-bottom: 6px;
+  line-height: 1;
+}
