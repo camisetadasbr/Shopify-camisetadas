@@ -42,14 +42,12 @@
     
     <div class="product-meta">
       <!--{% assign random = product.id | plus: 123456789 | divided_by: 65 | modulo: 32768 | modulo: 21500 %}--> 
-          {% assign random = product.id | divided_by: 220022 | modulo: 21550 %}
-          {% assign random_id = random | divided_by: 10 %}
+          {% assign random = product.id | divided_by: 220022 | modulo: 500 %}
+{% assign random_id = random | plus: 1284 %}
 
-          {%- if section.settings.mostrar_quantidadevendidos -%}
-
-      <span class="quantitysell" style="font-size: 12px;color: #b7b7b7;">Novo | <!--INICIO VENDIDOS-->{{ random_id }} Vendidos<!--FIM VENDIDOS--></span>
-      
-          {%- endif -%}
+{%- if section.settings.mostrar_quantidadevendidos -%}
+  <span class="quantitysell" style="font-size: 12px;color: #b7b7b7;">Novo | {{ random_id }} Vendidos</span>
+{%- endif -%}
     
       {%- if template.name == 'product' and template != 'product.quick-view' -%}
       <h1 class="product-meta__title heading h1">
