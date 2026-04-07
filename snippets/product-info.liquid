@@ -53,6 +53,9 @@
     
       {%- if template.name == 'product' and template != 'product.quick-view' -%}
       <h1 class="product-meta__title heading h1">{{ product.title }} 
+        <div class="product-stars-manual">
+  ★★★★★ <span>(1.284 avaliações)</span>
+</div>
         
         {%- if section.settings.mostrar_icone -%}
         <span><i class="fa fa-check-circle" aria-hidden="true" style="color: #005aff;font-size: 20px; position: relative; display: inline-block; top: -4px;"></i></span>
@@ -483,9 +486,7 @@
                 
            </div>
             
-<span class="product-personalize">Personalize</span>
-
-{% assign current_price = selected_variant.price %}
+            {% assign current_price = selected_variant.price %}
 {% assign pix_price = current_price | times: 95 | divided_by: 100 %}
 {% assign pix_discount = current_price | minus: pix_price %}
 
