@@ -14388,3 +14388,15 @@ input.qtyminus {
   color: #18A957;
   font-weight: bold;
 }
+.product-meta__inventory {
+  background: none !important;
+  padding: 0 !important;
+  margin-left: 6px;
+}
+
+.product-meta__inventory,
+.product-meta__inventory * {
+  color: #2563eb !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+}
