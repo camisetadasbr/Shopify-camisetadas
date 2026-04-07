@@ -14410,6 +14410,20 @@ input.qtyminus {
   display: inline-block;
   margin: 10px 0;
 }
-<div class="promo-bar">
-  ⏳ Oferta expira em <span id="countdown">04:59:59</span>
-</div>
+/* ===== PROMO BAR (CONTADOR) ===== */
+
+.promo-bar {
+  background: #111827;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  display: inline-block;
+  margin: 10px 0;
+}
+
+#countdown {
+  color: #22c55e;
+  margin-left: 4px;
+}
