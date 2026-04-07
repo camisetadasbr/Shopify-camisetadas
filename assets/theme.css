@@ -14234,15 +14234,20 @@ input.qtyminus {
   line-height: 1;
 }
 .product-personalize {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 700;
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
   color: #ff5a00;
-  margin-bottom: 4px;
-  letter-spacing: 0.3px;
+  margin-bottom: 2px;
+  line-height: 1.1;
 }
 
 .product-item__title {
-  margin-top: 2px;
-  font-weight: 600;
+  display: block;
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #1f2937;
 }
