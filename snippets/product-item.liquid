@@ -244,18 +244,22 @@
         {%- endif -%}
       {%- endif -%}
 
-{% assign current_price = selected_variant.price %}
-{% assign pix_price = current_price | times: 95 | divided_by: 100 %}
-{% assign pix_discount = current_price | minus: pix_price %}
+      {%- if settings.product_price_position == 'after_title' -%}
+        {{ price_list }}
+      {%- endif -%}
+      {% assign pix_price = product.price | times: 95 | divided_by: 100 %}
+{% assign pix_discount = product.price | minus: pix_price %}
 
-<div class="product-pix-final" id="product-pix-final">
-  <span class="product-pix-text">
-    <strong id="product-pix-price">{{ pix_price | money }}</strong> no PIX
+<div class="pix-clean">
+
+  <span class="pix-clean-text">
+    <strong>{{ pix_price | money }}</strong> no PIX
   </span>
 
-  <span class="product-pix-badge">
-    ECONOMIZE <span id="product-pix-discount">{{ pix_discount | money }}</span>
+  <span class="pix-clean-badge">
+    ECONOMIZE {{ pix_discount | money }}
   </span>
+
 </div>
 
       {% assign divididopor = settings.qty_vezes %}
@@ -440,57 +444,3 @@
     {%- endif -%}
   </div>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const productJsonEl = document.querySelector('[data-product-json]');
-  const pixPriceEl = document.getElementById('product-pix-price');
-  const pixDiscountEl = document.getElementById('product-pix-discount');
-  const productForm = document.querySelector('.product-form');
-
-  if (!productJsonEl || !pixPriceEl || !pixDiscountEl || !productForm) return;
-
-  const productData = JSON.parse(productJsonEl.textContent);
-
-  function formatMoney(cents) {
-    const value = (cents / 100).toFixed(2).replace('.', ',');
-    return 'R$' + value;
-  }
-
-  function updatePixFromVariant() {
-    const variantIdInput = productForm.querySelector('input[name="id"]');
-    if (!variantIdInput) return;
-
-    const variantId = Number(variantIdInput.value);
-    if (!variantId) return;
-
-    const variant = productData.product.variants.find(v => Number(v.id) === variantId);
-    if (!variant) return;
-
-    const currentPrice = Number(variant.price);
-    const pixPrice = Math.round(currentPrice * 0.95);
-    const pixDiscount = currentPrice - pixPrice;
-
-    pixPriceEl.textContent = formatMoney(pixPrice);
-    pixDiscountEl.textContent = formatMoney(pixDiscount);
-  }
-
-  updatePixFromVariant();
-
-  productForm.addEventListener('change', function () {
-    setTimeout(updatePixFromVariant, 80);
-  });
-
-  const variantIdInput = productForm.querySelector('input[name="id"]');
-  if (variantIdInput) {
-    const observer = new MutationObserver(function () {
-      updatePixFromVariant();
-    });
-
-    observer.observe(variantIdInput, {
-      attributes: true,
-      attributeFilter: ['value']
-    });
-  }
-});
-</script>
