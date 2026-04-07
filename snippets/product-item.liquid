@@ -322,9 +322,20 @@
       
       <div>
       <!-- Start Areviews Collection Rating Code -->
-      {%- if template.name == 'product' and template != 'product.quick-view' -%} 
-      <div class='areviews_header_stars'></div> 
-      {% else %}
+      {%- if template.name == 'product' and template != 'product.quick-view' -%}
+  <h1 class="product-meta__title heading h1">{{ product.title }} 
+        
+    {%- if section.settings.mostrar_icone -%}
+    <span><i class="fa fa-check-circle" aria-hidden="true" style="color: #005aff;font-size: 20px; position: relative; display: inline-block; top: -4px;"></i></span>
+    {%- endif -%}
+        
+  </h1>
+
+  <div class="product-stars">
+    ★★★★★ <span>(1.284 avaliações)</span>
+  </div>
+
+{%- else -%}
       <div class='areviews_product_item areviews_stars{{ product.id }}'  data-product-id='{{ product.id }}'></div>
       {% endif %}
       <!-- End Areviews Collection Rating Code -->
