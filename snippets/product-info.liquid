@@ -483,7 +483,9 @@
                 
            </div>
             
-            {% assign current_price = selected_variant.price %}
+<span class="product-personalize">Personalize</span>
+
+{% assign current_price = selected_variant.price %}
 {% assign pix_price = current_price | times: 95 | divided_by: 100 %}
 {% assign pix_discount = current_price | minus: pix_price %}
 
