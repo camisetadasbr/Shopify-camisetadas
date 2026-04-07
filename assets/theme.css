@@ -14400,3 +14400,13 @@ input.qtyminus {
   font-weight: 500 !important;
   font-size: 13px !important;
 }
+.promo-bar {
+  background: #111827;
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  display: inline-block;
+  margin: 10px 0;
+}
