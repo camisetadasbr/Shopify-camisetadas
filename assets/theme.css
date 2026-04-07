@@ -14375,3 +14375,16 @@ input.qtyminus {
   font-weight: 600;
   color: #6b7280;
 }
+.product-meta__inventory {
+  background: none !important;
+  color: #4b5563 !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  padding: 0 !important;
+}
+
+.product-meta__inventory::before {
+  content: "✔ ";
+  color: #18A957;
+  font-weight: bold;
+}
