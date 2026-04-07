@@ -14473,4 +14473,7 @@ input.qtyminus {
     padding: 9px 12px;
     gap: 6px;
   }
+}.promo-bar-wrapper,
+.promo-bar {
+  clear: both;
 }
