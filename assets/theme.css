@@ -14251,3 +14251,16 @@ input.qtyminus {
   line-height: 1.35;
   color: #1f2937;
 }
+.product-stars {
+  font-size: 14px;
+  color: #f5a623;
+  font-weight: 600;
+  margin-top: 6px;
+  margin-bottom: 10px;
+}
+
+.product-stars span {
+  color: #6b7280;
+  font-size: 13px;
+  margin-left: 4px;
+}
