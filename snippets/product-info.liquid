@@ -46,9 +46,9 @@
 {% assign random_id = random | plus: 1284 %}
 
 {%- if section.settings.mostrar_quantidadevendidos -%}
-  <span class="quantitysell" style="font-size: 12px;color: #b7b7b7;"><div class="sold-badge">
-  🔥 {{ random_id }} vendidos recentemente
-</div></span>
+  <span class="quantitysell">
+    {{ random_id }} vendidos
+  </span>
 {%- endif -%}
     
       {%- if template.name == 'product' and template != 'product.quick-view' -%}
