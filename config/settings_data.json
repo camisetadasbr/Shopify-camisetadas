@@ -529,7 +529,7 @@
         "type": "product-recommendations",
         "settings": {
           "show_product_recommendations": true,
-          "heading": "Talvez você goste",
+          "heading": "Você também pode gostar",
           "show_quick_buy": false
         }
       },
