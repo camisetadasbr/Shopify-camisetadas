@@ -440,3 +440,57 @@
     {%- endif -%}
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const productJsonEl = document.querySelector('[data-product-json]');
+  const pixPriceEl = document.getElementById('product-pix-price');
+  const pixDiscountEl = document.getElementById('product-pix-discount');
+  const productForm = document.querySelector('.product-form');
+
+  if (!productJsonEl || !pixPriceEl || !pixDiscountEl || !productForm) return;
+
+  const productData = JSON.parse(productJsonEl.textContent);
+
+  function formatMoney(cents) {
+    const value = (cents / 100).toFixed(2).replace('.', ',');
+    return 'R$' + value;
+  }
+
+  function updatePixFromVariant() {
+    const variantIdInput = productForm.querySelector('input[name="id"]');
+    if (!variantIdInput) return;
+
+    const variantId = Number(variantIdInput.value);
+    if (!variantId) return;
+
+    const variant = productData.product.variants.find(v => Number(v.id) === variantId);
+    if (!variant) return;
+
+    const currentPrice = Number(variant.price);
+    const pixPrice = Math.round(currentPrice * 0.95);
+    const pixDiscount = currentPrice - pixPrice;
+
+    pixPriceEl.textContent = formatMoney(pixPrice);
+    pixDiscountEl.textContent = formatMoney(pixDiscount);
+  }
+
+  updatePixFromVariant();
+
+  productForm.addEventListener('change', function () {
+    setTimeout(updatePixFromVariant, 80);
+  });
+
+  const variantIdInput = productForm.querySelector('input[name="id"]');
+  if (variantIdInput) {
+    const observer = new MutationObserver(function () {
+      updatePixFromVariant();
+    });
+
+    observer.observe(variantIdInput, {
+      attributes: true,
+      attributeFilter: ['value']
+    });
+  }
+});
+</script>
