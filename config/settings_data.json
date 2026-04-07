@@ -499,7 +499,7 @@
           "mostrar_quantidadevendidos": true,
           "mostrar_icone": true,
           "mostrar_codigodoitem": true,
-          "mostrar_barra_de_entrega": true,
+          "mostrar_barra_de_entrega": false,
           "blackfriday": false,
           "selector_mode": "block",
           "color_mode": "variant_image",
