@@ -14278,4 +14278,26 @@ input.qtyminus {
   padding: 4px 10px;
   border-radius: 999px;
   margin-bottom: 6px;
+}.product-stars {
+  font-size: 14px;
+  color: #F5A623 !important;
+  font-weight: 700;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.product-stars span {
+  color: #6b7280 !important;
+  font-size: 13px;
+  margin-left: 4px;
+}.quantitysell {
+  display: inline-block;
+  background: rgba(24, 169, 87, 0.10);
+  color: #18A957 !important;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 6px;
 }
